@@ -1,0 +1,6 @@
+<app-list-product [productos]="producto" [categorias]="categoria" [materiales]="material"
+  [presentaciones]="presentacion" (eliminarProduct)="eliminarProductoById($event)"
+  (editarProduct)="editarProducto($event)" (categoryChange)="onCategoryChange($event)">
+</app-list-product>
+
+<app-add-product class="d-none"></app-add-product>

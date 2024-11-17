@@ -1,0 +1,157 @@
+/**Globales
+:root {
+  --color-negro: #211f20;
+  --color-grisOscuro: #6c6d71;
+  --color-grisClaro: #e5e6e8;
+  --color-rojo: #ed1b24;
+  --color-amarillo: #fff100;
+  --color-anaranjado: #f5811e;
+  --color-cian: #00adef;
+  --color-azul: #005387;
+  --color-azulOscuro: #26237c;
+  --font-primary: "Montserrat", sans-serif;
+  --font-secondary: "Open Sans", sans-serif;
+}*/
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Montserrat", sans-serif;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+}
+
+/**Main*/
+
+.main {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.payment-form {
+  background-color: #efefef;
+  padding: 20px 20px 0px 20px;
+  border-radius: 10px;
+  width: 1000px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 100px;
+}
+
+.expiry-date {
+  display: flex;
+  gap: 5px;
+}
+
+.expiry-date input {
+  width: 100px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 10px;
+}
+
+.radio-group p {
+  font-size: 25px;
+  margin-bottom: 0px;
+}
+
+input {
+  max-width: 500px;
+}
+
+form {
+  > button {
+    display: flex;
+    justify-items: self-end;
+  }
+}
+
+label {
+  font-family: "Open Sans", sans-serif;
+  font-weight: bolder;
+}
+
+h2 {
+  display: flex;
+  justify-content: flex-start;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  color: #26237c;
+  margin-bottom: 20px;
+}
+
+/* Para navegadores webkit (Chrome, Safari, Edge) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Para Firefox */
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+}
+
+.boton {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+button {
+  font-size: 16px;
+}
+
+#file-upload {
+  display: flex;
+  background-color: #ffc107;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  text-align: center;
+}
+
+#file-upload:hover {
+  background-color: #ffca2c;
+}
+
+textarea {
+  max-height: 175px;
+}

@@ -1,0 +1,107 @@
+<!--CONTENEDOR DE LA LISTA DE PRODUCTOS-->
+<div class="container" style="padding-top: 40PX;">
+
+
+  <!--CONTENEDOR DE LA BARRA DE LA LISTA-->
+  <div class="row bg-warning rounded ">
+
+    <!--TITULO-->
+    <div class="col align-items-center justify-content-center d-flex">
+      <div>
+        <label style="font-size: 36px; color: #26237c;" class="form-label"><b>Lista de Productos</b></label>
+      </div>
+    </div>
+
+    <!--CONTENEDOR DE CATEGORIAS-->
+    <div class="col-md-4 d-flex justify-content-center align-items-center">
+      <div class="dropdown">
+        <div class="input-group mb-1" style="width: 250px; display: flex; flex-direction: row; align-items: center;">
+          <label class="input-group-text"><b>CATEGORIA</b></label>
+          <select class="form-select" name="categoria" (change)="onCategoryChange($event)">
+            <option value="TODOS">TODOS</option>
+            <option *ngFor="let categoria of categorias" [value]="categoria.nombre">
+              {{ categoria.nombre }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!--CONTENEDOR DEL BOTON AGREGAR-->
+    <div class="col-md-2 d-flex align-items-center justify-content-center">
+      <button (click)="addProduct()"
+        class=" text-center d-flex justify-content-center align-items-center bg-warning"
+        style="width: 50px; height: 50px; padding: 0; border: none;">
+        <b><i class="bi bi-patch-plus-fill" style="font-size: 35px; color: black;"></i></b>
+      </button>
+    </div>
+
+  </div>
+
+  <!--CONTENEDOOR DE LA TABLA DE PRODUCTOS-->
+  <div class="row" style="padding-top: 60px; padding-bottom: 40px;">
+
+    <!--TABLE-->
+    <table class="table table-striped table-bordered">
+
+      <!--ENCABEZADO DE TABLA-->
+
+      <thead>
+        <tr>
+          <th class="bg-warning rounded"><label class="form-label"><b>NOMBRE</b></label></th>
+          <th class="bg-warning rounded"><label class="form-label"><b>CATEGORÍA</b></label></th>
+          <th class="bg-warning rounded"><label class="form-label"><b>DESCRIPCIÓN</b></label></th>
+          <th class="bg-warning rounded"><label class="form-label"><b>IMAGEN</b></label></th>
+          <th class="bg-warning rounded"><label class="form-label"><b>MATERIAL</b></label></th>
+          <th class="bg-warning rounded"><label class="form-label"><b>PRESENTACIÓN</b></label></th>
+          <th class="bg-warning rounded"><label class="form-label"><b>PRECIO</b></label></th>
+          <th class="bg-warning rounded"><label class="form-label"><b>OPCIONES</b></label></th>
+        </tr>
+      </thead>
+
+
+
+      <!-- Iteración sobre los productos para mostrar cada uno -->
+      <ng-container *ngFor="let producto of productos let i = index">
+
+        <tr [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="text-center">
+          <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
+              producto.nombre }} </label></td>
+          <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
+              getCategoriaByName(producto.idCategoria!) }}</label></td>
+          <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
+              producto.descripcion }}</label></td>
+          <td><img width="60px" height="60px" [src]="producto.imagen" alt=""></td>
+          <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
+              getMaterialByName(producto.idMaterial!) }} </label></td>
+          <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
+              getPresentacionByName(producto.idPresentacion!) }} </label></td>
+          <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">S/
+              {{producto.precio }}</label></td>
+          <td>
+
+            <div style="width: 100%;" class="row" [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}">
+              <div style="width: 50%;" class="col d-flex align-items-center justify-content-center">
+                <button (click)="eliminarProducto(producto.idProducto!)" style="border: none; color: black;"
+                  class="btn btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+              <!--[routerLink]="['/producto-agregar']" -->
+              <div style="width: 50%;" class="col d-flex justify-content-center align-items-center">
+                <button (click)="editarProducto(producto)" style="border: none; color: black;"
+                  class="btn btn-outline-warning">
+                  <i class="bi bi-pencil"></i>
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+
+
+    </table>
+
+  </div>
+
+</div>

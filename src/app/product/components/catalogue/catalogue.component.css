@@ -1,0 +1,8 @@
+a {
+  text-decoration: none;
+}
+
+.card-img-top {
+  height: 60%;
+  object-fit: cover;
+}

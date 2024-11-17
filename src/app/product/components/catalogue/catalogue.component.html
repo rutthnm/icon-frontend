@@ -1,0 +1,73 @@
+<div class="container-fluid">
+
+  <!-- CONTENEDOR AMARILLO -->
+  <div class="row p-3">
+
+    <div class="container container text-center">
+      <!-- COLOR Y FORMA -->
+      <div class="rounded bg-warning p-2">
+        <!-- COMBOBOX -->
+        <div class="col">
+          <div class="dropdown">
+            <div class="input-group mb-1 container text-center" style="width: 350px;">
+              <label class="input-group-text" for="inputGroupSelect01"><b>CATEGORIA</b></label>
+              <select #selectedCategory class="form-select" id="inputGroupSelect01" (change)="filterProduct()" >
+                <option value="Todos">-- Todos -- </option>
+                <option *ngFor="let c of Categories" value="{{c.nombre}}" > {{c.nombre}} </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- CARDS PRODUCTOS -->
+
+  <div *ngIf="productsCatalogue.length > 0; else ProductsNull">
+
+    <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto p-5">
+        
+      <div class="col" *ngFor="let p of productsCatalogue; " >
+  
+        <a [routerLink]="['/producto']" class="card-link" (click)="infoProduct(p.nombre)">
+  
+          <div class="card h-100">
+  
+            <img src="{{p.imagen}}" class="card-img-top" alt="...">
+  
+            <div class="card-body">
+              <h4 class="card-title"> {{p.nombre}} </h4>
+              <p class="card-text"> {{p.descripcion}} </p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <h5>Precio: S/{{p.precio}} </h5>
+              </li>
+            </ul>
+  
+          </div>
+  
+        </a>
+  
+      </div>
+
+    </div>
+
+  </div>
+
+  <ng-template #ProductsNull>
+    <div class="text-center p-5">
+      <h2>No se encontraron productos.</h2>
+    </div>
+  </ng-template>
+
+
+    
+
+
+
+</div>

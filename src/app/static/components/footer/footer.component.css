@@ -1,0 +1,86 @@
+/**Globales
+:root {
+  --color-negro: #211f20;
+  --color-grisOscuro: #6c6d71;
+  --color-grisClaro: #e5e6e8;
+  --color-rojo: #ed1b24;
+  --color-amarillo: #fff100;
+  --color-anaranjado: #f5811e;
+  --color-cian: #00adef;
+  --color-azul: #005387;
+  --color-azulOscuro: #26237c;
+  --font-primary: "Montserrat", sans-serif;
+  --font-secondary: "Open Sans", sans-serif;
+}*/
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Montserrat", sans-serif;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+}
+
+/**Footer*/
+
+footer {
+  background-color: #26237c;
+  padding: 15px 30px;
+  color: white;
+  text-align: center;
+}
+
+footer img {
+  height: 125px;
+}
+
+.footer-container {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+article {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.product-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 10px;
+}
+
+.product-info p {
+  text-align: center;
+}
+
+.contact-item {
+  margin: 10px 0px 10px 0px;
+  display: flex;
+  align-items: center;
+}
+
+.contact-item img {
+  height: 35px;
+}
+
+.contact-item p {
+  margin-left: 10px;
+}
+
+.copyright {
+  margin-top: 20px;
+}

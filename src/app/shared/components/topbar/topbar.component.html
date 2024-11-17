@@ -1,0 +1,47 @@
+
+<header *ngIf="user?.rol === '' || !user">
+  <img src='../../../../assets/img/iconoPositivo.png' alt="Icono Grafico" [routerLink]="['/inicio']" />
+  <nav>
+    <a [routerLink]="['/inicio']" class="nav-link">Inicio</a>
+    <a [routerLink]="['/catalogo']" class="nav-link">Productos</a>
+    <a [routerLink]="['/nosotros']" class="nav-link">Nosotros</a>
+    <a [routerLink]="['/contacto']" class="nav-link">Contacto</a>
+  </nav>
+  <div class="auth-links">
+    <a [routerLink]="['/iniciarSesion']" class="nav-link">Iniciar Sesión</a>
+  </div>
+  <button [routerLink]="['/registrarse']">Registrarse</button>
+
+</header>
+
+
+
+<header *ngIf="user?.rol === 'cliente'">
+  <img src='../../../../assets/img/iconoPositivo.png' alt="Icono Grafico" [routerLink]="['/inicio']" />
+  <nav>
+    <a [routerLink]="['/inicio']" class="nav-link">Inicio</a>
+    <a [routerLink]="['/catalogo']" class="nav-link">Productos</a>
+    <a [routerLink]="['/nosotros']" class="nav-link">Nosotros</a>
+    <a [routerLink]="['/contacto']" class="nav-link">Contacto</a>
+    <a [routerLink]="['/compras']" class="nav-link ">Compras</a>
+  </nav>
+  <div class="auth-links">
+    <a [routerLink]="['/perfil']" class="nav-link">{{namesUser}} </a>
+  </div>
+  <img src="../../../../assets/img/logoUser.png" alt="icono de perfil" [routerLink]="['/perfil']">
+</header>
+
+
+<header *ngIf="user?.rol === 'Admin'">
+  <img src='../../../../assets/img/iconoPositivo.png' alt="Icono Grafico" [routerLink]="['/ventas']" />
+  <nav>
+    <a [routerLink]="['/ventas']" class="nav-link add">Ventas</a>
+    <a [routerLink]="['/producto-lista']" class="nav-link add">Lista de Productos</a>
+    <a [routerLink]="['/producto-configuracion']" class="nav-link add">Configuración de Productos</a>
+    <a [routerLink]="['/registar-admin']" class="nav-link add">Administración de Cuentas</a>
+  </nav>
+  <div class="auth-links">
+    <a [routerLink]="['/perfil']" class="nav-link">{{namesUser}} </a>
+  </div>
+  <img src="../../../../assets/img/logoUser.png" alt="icono de perfil" [routerLink]="['/perfil']">
+</header>

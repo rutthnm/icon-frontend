@@ -1,0 +1,45 @@
+body {
+  font-family: sans-serif;
+}
+
+.container {
+  width: 500px;
+  margin: 80px auto;
+  padding: 50px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.campo {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.buttonr {
+  text-align: center;
+}
+
+.buttonp {
+  text-align: center;
+}
+
+.buttoni {
+  text-align: center;
+}

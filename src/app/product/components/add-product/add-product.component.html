@@ -1,0 +1,66 @@
+<section class="main">
+  <h2> {{ product.idProducto ? 'Actualizar Producto' : 'Agregar Producto:' }} </h2>
+  <div class="payment-form">
+    <form>
+      <div>
+        <div class="form-group">
+          <label for="card-name">Nombre:</label>
+          <input type="text" id="nombre" [(ngModel)]="product.nombre" name="nombre" placeholder="Nombre del Producto..."
+            class="form-control form-control-sm">
+        </div>
+        <div class="form-group">
+          <label for="card-desc">Descripción:</label>
+          <textarea id="descripcion" [(ngModel)]="product.descripcion" name="descripcion"
+            placeholder="Descripción del Producto..." class="form-control form-control-sm"></textarea>
+        </div>
+      </div>
+      <div>
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="categorySelect" style="width: 140px;">Categoría:</label>
+          <select class="form-select" id="idCategoria" [(ngModel)]="product.idCategoria" name="idCategoria">
+            <option value=""> --Seleccionar--</option>
+            <option *ngFor="let categoria of listcategoria"> {{ categoria.nombre }} </option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="categorySelect" style="width: 140px;">Material:</label>
+          <select class="form-select" id="idMaterial" [(ngModel)]="product.idMaterial" name="idMaterial">
+            <option value=""> --Seleccionar--</option>
+            <option *ngFor="let material of listmaterial"> {{ material.nombre }} </option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="categorySelect" style="width: 140px;">Presentación:</label>
+          <select class="form-select" id="idPresentacion" [(ngModel)]="product.idPresentacion" name="idPresentacion">
+            <option value=""> --Seleccionar--</option>
+            <option *ngFor="let presentacion of listpresentacion"> {{ presentacion.nombre }} </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="security-code">Precio:</label>
+          <div class="expiry-date">
+            <input type="number" id="precio" [(ngModel)]="product.precio" name="precio" placeholder="S/"
+              class="form-control form-control-sm">
+          </div>
+        </div>
+      </div>
+      <div class="add">
+        <div class="form-group">
+          <label>
+            <i class="fas fa-upload"></i> Añadir Imagen
+          </label>
+          <input id="file-upload" type="file" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png, .webp">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="boton">
+    <button *ngIf="product.idProducto" type="submit" class="btn btn-warning btn-lg my-auto" (click)="updateProduct()">
+      ACTUALIZAR<br>PRODUCTO
+    </button>
+    <button *ngIf="!product.idProducto" type="submit" class="btn btn-warning btn-lg my-auto" (click)="addProduct()">
+      AGREGAR<br>PRODUCTO
+    </button>
+
+  </div>
+</section>

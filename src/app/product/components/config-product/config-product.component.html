@@ -1,0 +1,77 @@
+<div class="body">
+  <h1><b>Configuración de Productos</b></h1>
+  <div class="container d-flex align-items-center justify-content-center">
+    <div style="background-color: #e6e5ec; width: 800px; border-radius: 10px; padding-top: 20px;">
+      <!-- Sección para agregar una nueva categoría -->
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="row " style="width: 800px;">
+          <div class="col">
+            <section style="background-color: #D9E0FF;" class="form-section">
+              <h2><label class="form-label">Agregar Categoría</label></h2>
+              <div class="form-group">
+                <label for="categoria">
+                  <h2>Nombre: </h2>
+                </label>
+                <input placeholder="Ejemplo: TARJETAS" type="text" id="categoria" name="nombre"
+                  [(ngModel)]="categoria.nombre" class="form-control">
+                <p style="width: 40px;"></p>
+                <!-- Botón para agregar una nueva categoría -->
+                <button class="btn btn-warning btn-lg my-auto"
+                  (click)="AgregarCate(categoria)"><b>Agregar<br>Cat.</b></button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Sección para agregar una nueva presentación -->
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="row " style="width: 800px;">
+          <div class="col">
+            <section style="background-color: #D9E0FF;" class="form-section">
+              <h2><label class="form-label">Agregar Presentación</label></h2>
+              <div class="form-group">
+                <label for="presentacion">
+                  <h2>Nombre: </h2>
+                </label>
+                <input placeholder="Ejemplo: MILLAR" type="text" id="presentacion" name="nombre"
+                  [(ngModel)]="presentacion.nombre" class="form-control">
+                <p style="width: 40px;"></p>
+                <!-- Botón para agregar una nueva presentación -->
+                <button class="btn btn-warning btn-lg my-auto"
+                  (click)="AgregarPres(presentacion)"><b>Agregar<br>Pre.</b></button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección para agregar un nuevo material -->
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="row " style="width: 800px;">
+          <div class="col">
+            <section style="background-color: #D9E0FF;" class="form-section">
+              <h2><label class="form-label">Agregar Material</label></h2>
+              <div class="form-group">
+                <label for="material">
+                  <h2>Nombre: </h2>
+                </label>
+                <input placeholder="Ejemplo: COUCHE DE 350GR GLOSS" type="text" id="material" name="nombre"
+                  [(ngModel)]="material.nombre" class="form-control">
+                <!-- Botón para agregar un nuevo material -->
+                <p style="width: 40px;"></p>
+                <button class="btn btn-warning btn-lg my-auto"
+                  (click)="AgregarMate(material)"><b>Agregar<br>Mat.</b></button>
+              </div>
+
+            </section>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

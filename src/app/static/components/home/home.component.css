@@ -1,0 +1,103 @@
+/**Globales
+:root {
+  --color-negro: #211f20;
+  --color-grisOscuro: #6c6d71;
+  --color-grisClaro: #e5e6e8;
+  --color-rojo: #ed1b24;
+  --color-amarillo: #fff100;
+  --color-anaranjado: #f5811e;
+  --color-cian: #00adef;
+  --color-azul: #005387;
+  --color-azulOscuro: #26237c;
+  --font-primary: "Montserrat", sans-serif;
+  --font-secondary: "Open Sans", sans-serif;
+}*/
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Montserrat", sans-serif;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+}
+
+/**Section 1*/
+.primera {
+  padding: 50px 80px 50px 80px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.textinfo,
+.itemphoto p {
+  color: #26237c;
+  font-family: "Open Sans", sans-serif;
+}
+
+.min,
+.max {
+  margin: 0; /* Elimina el espacio entre los elementos */
+  font-weight: 475;
+}
+
+.min {
+  font-size: 25px;
+}
+
+.max {
+  font-size: 75px;
+}
+
+.parraf {
+  max-width: 775px;
+  text-wrap: pretty;
+}
+
+.collage {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 10px;
+  justify-content: center;
+}
+
+.itemphoto {
+  display: flex;
+  flex-direction: column; /* Colocar elementos en columna */
+  align-items: center; /* Alinear elementos horizontalmente al centro */
+  padding: 20px; /* Espacio interior del contenedor */
+}
+
+.itemphoto img {
+  border: 3px solid #26237c; /* Borde sólido de color amarillo */
+  height: 150px;
+  width: 150px;
+}
+
+.itemphoto p {
+  font-weight: 650;
+}
+
+button {
+  color: #26237c;
+  font-size: 20px;
+  padding: 15px 25px;
+  border-radius: 100px;
+  border: none;
+  background-color: #fff100;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #bdb304;
+  }
+}

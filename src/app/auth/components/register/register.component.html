@@ -1,0 +1,54 @@
+<body>
+  <div class="container">
+    <h3>REGISTRO DE USUARIO</h3>
+    <br>
+    <form id="formularioRegistro" (ngSubmit)="newUserClient(userForm)" >
+      <div class="campo">
+        <label for="nombres" >Nombres:</label>
+        <input type="text" id="nombres" name="nombres" [(ngModel)]="userForm.nombres" required>
+      </div>
+      <div class="campo">
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" [(ngModel)]="userForm.apellidos" required>
+      </div>
+
+      
+      <div class="campo">
+        <label for="tipoDocumento">Tipo de Documento:</label>
+        <select class="form-select" id="tipoDocumento" [(ngModel)]="userForm.documento" name="tipoDocumento">
+          <option value=""> --Seleccionar--</option>
+          <option value="DNI"> DNI </option>
+          <option value="RUC"> RUC </option>
+          <option value="Carnet de Extranjería"> Carnet de Extranjería </option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="numeroDocumento">N° de Documento:</label>
+        <input type="text" id="numeroDocumento" name="numeroDocumento" [(ngModel)]="userForm.nDocumento" required>
+      </div>
+      
+      <div class="campo">
+        <label for="numeroTelefono">N° de Teléfono:</label>
+        <input type="text" id="numeroTelefono" name="numeroTelefono" [(ngModel)]="userForm.nTeleforno" required>
+      </div>
+
+      <div class="campo">
+        <label for="correoElectronico">Correo Electrónico:</label>
+        <input type="email" id="correoElectronico" name="correoElectronico" [(ngModel)]="userForm.correo" required>
+      </div>
+
+      <div class="campo">
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" id="contrasena" name="contrasena" [(ngModel)]="userForm.contrasena" required>
+      </div>
+      <br>
+      <div class="buttonr">
+
+        <button type="submit">Registrarse</button>
+
+      </div>
+    </form>
+  </div>
+
+</body>

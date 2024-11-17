@@ -1,0 +1,85 @@
+/**Globales
+:root {
+  --color-negro: #211f20;
+  --color-grisOscuro: #6c6d71;
+  --color-grisClaro: #e5e6e8;
+  --color-rojo: #ed1b24;
+  --color-amarillo: #fff100;
+  --color-anaranjado: #f5811e;
+  --color-cian: #00adef;
+  --color-azul: #005387;
+  --color-azulOscuro: #26237c;
+  --font-primary: "Montserrat", sans-serif;
+  --font-secondary: "Open Sans", sans-serif;
+}*/
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Montserrat", sans-serif;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+}
+
+/**Nosotros*/
+.nosotros {
+  padding: 50px 80px 50px 80px;
+}
+
+.nosotros p,
+ol,
+h1 {
+  color: #26237c;
+  font-family: "Open Sans", sans-serif;
+}
+
+.nosotros h1,
+h2 {
+  text-align: center;
+}
+
+.nosotros h1 {
+  font-weight: 500;
+  font-size: 40px;
+  padding-bottom: 50px;
+}
+.mvo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  justify-content: center;
+}
+
+.mision,
+.vision,
+.objetivos {
+  border-radius: 35px;
+  background-color: #fff100;
+}
+
+.vision {
+  background-color: #ececec;
+}
+
+.mision p,
+.vision p,
+.objetivos ol {
+  font-size: 17px;
+  margin: 20px 20px 20px 20px;
+  text-wrap: pretty;
+}
+
+.mision h2,
+.vision h2,
+.objetivos h2 {
+  margin-top: 15px;
+  font-size: 25px;
+}

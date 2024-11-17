@@ -1,0 +1,103 @@
+<!-- Filtro -->
+<div class="container mt-5 text-center">
+  <div class="rounded bg-warning p-2">
+    <div class="row">
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="documentoInput">N°DOC</label>
+          <input type="text" class="form-control" id="documentoInput" [(ngModel)]="filters.documento"
+            (change)="applyFilters()">
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="categorySelect">CATEGORÍA</label>
+          <select class="form-select" id="categorySelect" [(ngModel)]="filters.category" (change)="applyFilters()">
+            <option value="">Seleccionar</option>
+            <option value="Calendarios">Calendarios</option>
+            <option value="Letreros">Letreros</option>
+            <option value="Volantes">Volantes</option>
+            <option value="Merchandising">Merchandising</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="typeSelect">TIPO</label>
+          <select class="form-select" id="typeSelect" [(ngModel)]="filters.type" (change)="applyFilters()">
+            <option value="">Seleccionar</option>
+            <option value="Boleta">Boleta</option>
+            <option value="Factura">Factura</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="fromSelect">DESDE</label>
+          <input type="date" class="form-control" id="fromSelect" [(ngModel)]="filters.from" (change)="applyFilters()">
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="toSelect">HASTA</label>
+          <input type="date" class="form-control" id="toSelect" [(ngModel)]="filters.to" (change)="applyFilters()">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+<!-- Tabla -->
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div class="col">
+    <table class="table table-striped table-bordered" style="text-align: center;">
+      <thead>
+        <tr>
+          <th colspan="9" style="font-size:x-large;">
+            VENTAS
+          </th>
+        </tr>
+        <tr>
+          <th>N°</th>
+          <th>N°DOCUMENTO</th>
+          <th>CLIENTE</th>
+          <th>PRODUCTO</th>
+          <th>CANTIDAD</th>
+          <th>TIPO</th>
+          <th>FECHA</th>
+          <th>MONTO</th>
+          <th>VER</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let sale of ventas; let i = index">
+          <!-- id -->
+          <td>{{ i + 1 }}</td>
+
+          <!-- lista de ventas -->
+          <td style="text-align: center;">{{ sale.nDocumento }}</td>
+          <td style="text-align: center;">{{sale.nombrePersona}}</td>
+          <td style="text-align: center;">{{ sale.nombreProducto }}</td>
+          <td style="text-align: center;">{{ sale.cantidad }}</td>
+          <td style="text-align: center;">{{ sale.tipo }}</td>
+          <td style="text-align: center;">{{ sale.fecha }}</td>
+          <td style="text-align: center;">S/.{{ sale.total }}</td>
+
+          <!-- ojito -->
+          <td>
+            <button class="btn btn-outline-warning" [routerLink]="'/comprobante'"><i class="fas fa-eye"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-1"></div>
+</div>

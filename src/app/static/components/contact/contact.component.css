@@ -1,0 +1,89 @@
+/**Globales
+:root {
+  --color-negro: #211f20;
+  --color-grisOscuro: #6c6d71;
+  --color-grisClaro: #e5e6e8;
+  --color-rojo: #ed1b24;
+  --color-amarillo: #fff100;
+  --color-anaranjado: #f5811e;
+  --color-cian: #00adef;
+  --color-azul: #005387;
+  --color-azulOscuro: #26237c;
+  --font-primary: "Montserrat", sans-serif;
+  --font-secondary: "Open Sans", sans-serif;
+}*/
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Montserrat", sans-serif;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+}
+
+/**Contacto*/
+
+.contacto {
+  padding: 50px 80px 50px 80px;
+  color: #26237c;
+  font-family: "Open Sans", sans-serif;
+}
+
+.textCont {
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.textCont span {
+  font-weight: 500;
+  font-size: 40px;
+}
+
+.infoCont {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
+}
+
+.pago,
+.cont {
+  text-align: center;
+}
+
+.pago img,
+.cont img {
+  height: 50px;
+  width: 50px;
+}
+
+.cont img {
+  margin-top: 10px;
+  margin-left: 8px;
+}
+
+.pago span,
+.cont span {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 500px;
+}
+
+.pagoItem {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0px 10px 0px;
+}
+
+.pagoItem p {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 10px;
+}

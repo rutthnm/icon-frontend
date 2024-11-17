@@ -1,0 +1,68 @@
+<div class="body d-flex justify-content-center align-items-center">
+  <ul >
+    <div class="comprobante" id="comprobante">
+      <div class="row">
+        <div class="col text-center header">
+          <h4 class="header-text"><b>"ICONO GRÁFICO"</b></h4>
+          <h5>Av. España - Trujillo - Perú</h5>
+          <h5>962849210</h5>
+        </div>
+        <div class="col text-center header header-ruc">
+          <div style="border: 1px solid black; width: max-content;">
+            <h5>RUC: 10142536781</h5>
+            <h5> {{comprobante?.tipo}} </h5>
+            <h5> {{comprobante?.serie}} - {{comprobante?.numeracion}} </h5>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col info">
+          <h5>Señor(a): {{comprobante?.nombrePersona}} {{comprobante?.apellidos}} </h5>
+          <h5>{{comprobante?.documento}}: {{comprobante?.nDocumento}}</h5>
+          <h5>Teléfono: {{comprobante?.telefono}}</h5>
+        </div>
+        <div id="fecha" class="col text-right info">
+          <div>
+            <h5>Fecha Emisión: {{comprobante?.fecha}} </h5>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 70%;">PRODUCTO</th>
+              <th>categoria</th>
+              <th>CANTIDAD</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr>
+              <td style="height: 50px;"> {{comprobante?.nombreProducto}}</td>
+              <td>{{comprobante?.categoria}}</td>
+              <td> {{comprobante?.cantidad}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-10 totals">
+          <h6>Subtotal:</h6>
+          <h6>IGV:</h6>
+          <h6>Total a Pagar:</h6>
+        </div>
+        <div class="col-2 totals-1">
+          <h6>S/ {{comprobante?.subTotal}} </h6>
+          <h6>S/ {{comprobante?.igv}} </h6>
+          <h6>S/ {{comprobante?.total}} </h6>
+        </div>
+      </div>
+    </div>
+  </ul>
+</div>
+<div id="cont-btn">
+  <button id="btnDescargar" class="btn btn-warning btn-lg my-auto" (click)="generarPDF()"><b>DESCARGAR
+      COMPROBANTE</b></button>
+</div>

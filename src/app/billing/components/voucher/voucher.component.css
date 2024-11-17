@@ -1,0 +1,53 @@
+.body {
+  width: 100%;
+  padding-top: 20px;
+}
+
+.comprobante {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  width: 198mm; /* Ancho máximo */
+  height: 120mm; /* Altura máxima */
+  background-color: white;
+}
+
+.header-ruc {
+  display: flex;
+  justify-content: right;
+}
+
+#fecha {
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.table th,
+.table td {
+  text-align: center;
+
+  padding: 8px;
+}
+
+.comprobante .table th,
+.comprobante .table td {
+  padding: 8px;
+}
+
+.comprobante .totals {
+  text-align: right;
+  margin-top: 2px;
+}
+
+.comprobante .totals-1 {
+  text-align: left;
+  margin-top: 2px;
+}
+
+#cont-btn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}

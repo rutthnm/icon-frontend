@@ -1,0 +1,74 @@
+<section class="main">
+  <h2>Registar Administrador:</h2>
+  <div class="register">
+    <form>
+      <div class="form-group">
+        <label for="card-name">Nombre:</label>
+        <input type="text" id="card-name" name="nombres" class="form-control form-control-sm" [(ngModel)]="userForm.nombres">
+      </div>
+      <div class="form-group">
+        <label for="card-name">Apellidos:</label>
+        <input type="text" id="card-name" name="apellidos" class="form-control form-control-sm" [(ngModel)]="userForm.apellidos">
+      </div>
+      <div class="input-group mb-2">
+        <label class="input-group-text" for="categorySelect">Documento:</label>
+        <select class="form-select" name="categorySelect" [(ngModel)]="userForm.documento">
+          <option value="">Seleccionar</option>
+          <option value="Calendarios">DNI</option>
+          <option value="Letreros">RUC</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="card-name">N° Documento:</label>
+        <input type="number" id="card-name" name="nDocumento" class="form-control form-control-sm" [(ngModel)]="userForm.nDocumento">
+      </div>
+      <div class="form-group">
+        <label for="card-name">N° Teléfono:</label>
+        <input type="number" id="card-name" name="nTeleforno" class="form-control form-control-sm" [(ngModel)]="userForm.nTeleforno">
+      </div>
+      <div class="form-group">
+        <label for="card-name">Correo:</label>
+        <input type="email" id="card-name" name="correo" class="form-control form-control-sm" [(ngModel)]="userForm.correo">
+      </div>
+      <div class="form-group">
+        <label for="card-name">Contraseña:</label>
+        <input type="password" id="card-name" name="contrasena" class="form-control form-control-sm" [(ngModel)]="userForm.contrasena">
+      </div>
+      <div class="form-group">
+        <label for="card-name">Rol:</label>
+        <p id="card-name" class="form-control" style="width: 140px;">Admin</p>
+      </div>
+    </form>
+    <div class="payment-form">
+      <!-- Tabla -->
+      <div class="container mt-5">
+        <h2 class="text-center">Administradores</h2>
+        <table class="table table-bordered">
+          <thead class="theadY">
+            <tr>
+              <th scope="col">Email</th>
+              <th scope="col">Rol</th>
+              <th scope="col">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let users of usersAdmin">
+              <td>{{users.correo}} </td>
+              <td>{{users.rol}} </td>
+              <td class="text-center">
+                <button class="btn btn-danger" (click)="deleteUserAdmin(users)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+            <!-- Puedes agregar más filas aquí -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="boton">
+    <button type="submit" class="btn btn-warning btn-lg my-auto" (click)="newUserAdmin(userForm)" >AGREGAR</button>
+  </div>
+</section>
