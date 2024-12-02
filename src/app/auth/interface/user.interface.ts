@@ -7,5 +7,16 @@ export interface User {
   nTeleforno?: string;
   correo: string;
   contrasena: string;
-  rol?: string
+  rol?: string;
+}
+
+export interface UsuarioCliente {
+  nombres: string;
+  apellidos: string;
+  documento: string;
+  nDocumento: string;
+  nTeleforno: string;
+  correo: string;
+  contrasena: string;
+  rol: string;
 }

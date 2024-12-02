@@ -2,9 +2,9 @@
   <div class="container">
     <h3>REGISTRO DE USUARIO</h3>
     <br>
-    <form id="formularioRegistro" (ngSubmit)="newUserClient(userForm)" >
+    <form id="formularioRegistro" (ngSubmit)="newUserClient(userForm)">
       <div class="campo">
-        <label for="nombres" >Nombres:</label>
+        <label for="nombres">Nombres:</label>
         <input type="text" id="nombres" name="nombres" [(ngModel)]="userForm.nombres" required>
       </div>
       <div class="campo">
@@ -12,7 +12,7 @@
         <input type="text" id="apellidos" name="apellidos" [(ngModel)]="userForm.apellidos" required>
       </div>
 
-      
+
       <div class="campo">
         <label for="tipoDocumento">Tipo de Documento:</label>
         <select class="form-select" id="tipoDocumento" [(ngModel)]="userForm.documento" name="tipoDocumento">
@@ -27,7 +27,7 @@
         <label for="numeroDocumento">N° de Documento:</label>
         <input type="text" id="numeroDocumento" name="numeroDocumento" [(ngModel)]="userForm.nDocumento" required>
       </div>
-      
+
       <div class="campo">
         <label for="numeroTelefono">N° de Teléfono:</label>
         <input type="text" id="numeroTelefono" name="numeroTelefono" [(ngModel)]="userForm.nTeleforno" required>
@@ -42,7 +42,13 @@
         <label for="contrasena">Contraseña:</label>
         <input type="password" id="contrasena" name="contrasena" [(ngModel)]="userForm.contrasena" required>
       </div>
-      <br>
+      <a class="nav-link" style="margin-top: 12px; margin-bottom: 20px;">
+        ¿Ya tienes cuenta?
+        <span [routerLink]="['/iniciarSesion']" style="cursor: pointer; color: blue; text-decoration: underline;">
+          Inicia sesión
+        </span>
+      </a>
+
       <div class="buttonr">
 
         <button type="submit">Registrarse</button>
