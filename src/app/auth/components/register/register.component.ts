@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
-import { User } from '../../interface/user.interface';
+import { UsuarioCliente } from '../../interface/user.interface';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
+  constructor(private authService: AuthService, private router: Router) {}
 
-  constructor(private authService: AuthService, private router : Router){}
-
-  userForm : User = {
+  userForm: UsuarioCliente = {
     nombres: '',
     apellidos: '',
     documento: '',
@@ -20,11 +19,11 @@ export class RegisterComponent {
     nTeleforno: '',
     correo: '',
     contrasena: '',
-    rol: 'cliente'
-  }
+    rol: 'cliente',
+  };
 
-  newUserClient(user : User){
-    if(
+  newUserClient(user: UsuarioCliente) {
+    if (
       !this.userForm.nombres ||
       !this.userForm.apellidos ||
       !this.userForm.documento ||
@@ -32,17 +31,10 @@ export class RegisterComponent {
       !this.userForm.nTeleforno ||
       !this.userForm.correo ||
       !this.userForm.contrasena
-    ){
-      alert('Datos incompletos.')
+    ) {
+      alert('Datos incompletos.');
+    } else {
+      this.authService.nuevoUsuario(user);
     }
-    else{
-      this.authService.newUser(user)
-      this.router.navigate(['/iniciarSesion'])
-    } 
   }
-
-
-
-    
-  
 }

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { User } from '../interface/user.interface';
+import { User, UsuarioCliente } from '../interface/user.interface';
 import { v4 as uuid } from 'uuid';
 import { Router } from '@angular/router';
-
+import { HttpClient } from '@angular/common/http';
+import { enviroment } from '../../../environments/environments';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: HttpClient) {
     this.loadLocalStorage();
     this.loadLocalStorageAuth();
   }
@@ -78,6 +79,7 @@ export class AuthService {
     return this.userAuth;
   }
 
+  //SE BORRA PROXIMAMENTE
   newUser(user: User) {
     const newUser: User = { idUsuario: uuid(), ...user };
     this.users.push(newUser);
@@ -131,5 +133,34 @@ export class AuthService {
   deleteUserAdmin(user: User) {
     this.users = this.users.filter((us) => us.idUsuario !== user.idUsuario);
     this.saveLocalStorage();
+  }
+
+  //CONSUMIENDO LA API
+
+  private apiURL: string = enviroment.apiURL;
+
+  nuevoUsuario(usuario: UsuarioCliente) {
+    const payload = {
+      correo: usuario.correo,
+      contrasena: usuario.contrasena,
+      rol: usuario.rol,
+      idPersona: {
+        nombres: usuario.nombres,
+        apellidos: usuario.apellidos,
+        documento: usuario.documento,
+        nDocumento: usuario.nDocumento,
+        telefono: usuario.nTeleforno,
+      },
+    };
+    this.http.post(`${this.apiURL}usuarios`, payload).subscribe({
+      next: () => {
+        this.router.navigate(['/iniciarSesion']);
+      },
+      error: (err) => {
+        const errorMessage =
+          err?.error?.message || 'Hubo un error al registrar el usuario.';
+        alert(errorMessage);
+      },
+    });
   }
 }
