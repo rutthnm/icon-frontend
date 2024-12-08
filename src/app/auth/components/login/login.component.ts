@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { User } from '../../interface/user.interface';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { LoginUser } from '../../interface/login.interface';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +8,14 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService) {}
 
-  userLogin: User = {
+  userLogin: LoginUser = {
     correo: '',
     contrasena: '',
   };
 
-  loginUser(user: User) {
-    this.authService.authLogin(user);
+  loginUser(user: LoginUser) {
+    this.authService.logearUsuario(user);
   }
 }

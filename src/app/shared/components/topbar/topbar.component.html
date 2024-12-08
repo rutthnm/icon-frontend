@@ -1,4 +1,3 @@
-
 <header *ngIf="user?.rol === '' || !user">
   <img src='../../../../assets/img/iconoPositivo.png' alt="Icono Grafico" [routerLink]="['/inicio']" />
   <nav>
@@ -26,13 +25,13 @@
     <a [routerLink]="['/compras']" class="nav-link ">Compras</a>
   </nav>
   <div class="auth-links">
-    <a [routerLink]="['/perfil']" class="nav-link">{{namesUser}} </a>
+    <a [routerLink]="['/perfil']" class="nav-link">{{nombre}} {{apellido}} </a>
   </div>
   <img src="../../../../assets/img/logoUser.png" alt="icono de perfil" [routerLink]="['/perfil']">
 </header>
 
 
-<header *ngIf="user?.rol === 'Admin'">
+<header *ngIf="user?.rol === 'administrador'">
   <img src='../../../../assets/img/iconoPositivo.png' alt="Icono Grafico" [routerLink]="['/ventas']" />
   <nav>
     <a [routerLink]="['/ventas']" class="nav-link add">Ventas</a>
@@ -41,7 +40,7 @@
     <a [routerLink]="['/registar-admin']" class="nav-link add">Administración de Cuentas</a>
   </nav>
   <div class="auth-links">
-    <a [routerLink]="['/perfil']" class="nav-link">{{namesUser}} </a>
+    <a [routerLink]="['/perfil']" class="nav-link">{{nombre}} {{apellido}}</a>
   </div>
   <img src="../../../../assets/img/logoUser.png" alt="icono de perfil" [routerLink]="['/perfil']">
 </header>
