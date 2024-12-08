@@ -5,17 +5,17 @@
     <form id="formularioRegistro" (ngSubmit)="newUserClient(userForm)">
       <div class="campo">
         <label for="nombres">Nombres:</label>
-        <input type="text" id="nombres" name="nombres" [(ngModel)]="userForm.nombres" required>
+        <input type="text" id="nombres" name="nombres" [(ngModel)]="userForm.persona.nombres" required>
       </div>
       <div class="campo">
         <label for="apellidos">Apellidos:</label>
-        <input type="text" id="apellidos" name="apellidos" [(ngModel)]="userForm.apellidos" required>
+        <input type="text" id="apellidos" name="apellidos" [(ngModel)]="userForm.persona.apellidos" required>
       </div>
 
 
       <div class="campo">
         <label for="tipoDocumento">Tipo de Documento:</label>
-        <select class="form-select" id="tipoDocumento" [(ngModel)]="userForm.documento" name="tipoDocumento">
+        <select class="form-select" id="tipoDocumento" [(ngModel)]="userForm.persona.documento" name="tipoDocumento">
           <option value=""> --Seleccionar--</option>
           <option value="DNI"> DNI </option>
           <option value="RUC"> RUC </option>
@@ -25,12 +25,13 @@
 
       <div class="campo">
         <label for="numeroDocumento">N° de Documento:</label>
-        <input type="text" id="numeroDocumento" name="numeroDocumento" [(ngModel)]="userForm.nDocumento" required>
+        <input type="text" id="numeroDocumento" name="numeroDocumento" [(ngModel)]="userForm.persona.nDocumento"
+          required>
       </div>
 
       <div class="campo">
         <label for="numeroTelefono">N° de Teléfono:</label>
-        <input type="text" id="numeroTelefono" name="numeroTelefono" [(ngModel)]="userForm.nTeleforno" required>
+        <input type="text" id="numeroTelefono" name="numeroTelefono" [(ngModel)]="userForm.persona.telefono" required>
       </div>
 
       <div class="campo">

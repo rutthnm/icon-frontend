@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
-import { User } from '../../../auth/interface/user.interface';
+import { UsuarioAuth } from '../../../auth/interface/user.interface';
 
 @Component({
   selector: 'shared-topbar',
@@ -8,22 +8,18 @@ import { User } from '../../../auth/interface/user.interface';
   styleUrl: './topbar.component.css',
 })
 export class TopbarComponent {
-
-  constructor(private authService: AuthService){
-    this.loadUser()    
-    this.namesUser = `${this.user?.nombres} ${this.user?.apellidos}`
+  constructor(private authService: AuthService) {
+    this.loadUser();
+    this.nombre = this.user?.nombre;
+    this.apellido = this.user?.apellido;
   }
 
-  namesUser?: string
+  nombre?: string;
+  apellido?: string;
 
-  user?: User
+  user?: UsuarioAuth;
 
-  loadUser(){
-
-    this.user = this.authService.userLogued
-    
+  loadUser() {
+    this.user = this.authService.usuarioLogueado;
   }
-
-  
-
 }

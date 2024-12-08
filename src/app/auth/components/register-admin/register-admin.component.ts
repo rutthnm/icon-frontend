@@ -6,15 +6,14 @@ import { User } from '../../interface/user.interface';
 @Component({
   selector: 'app-register-admin',
   templateUrl: './register-admin.component.html',
-  styleUrl: './register-admin.component.css'
+  styleUrl: './register-admin.component.css',
 })
 export class RegisterAdminComponent {
-
-  constructor(private authService: AuthService, private router : Router){
-    this.loadUserAdmin()
+  constructor(private authService: AuthService, private router: Router) {
+    this.loadUserAdmin();
   }
 
-  userForm : User = {
+  userForm: User = {
     nombres: '',
     apellidos: '',
     documento: '',
@@ -22,13 +21,13 @@ export class RegisterAdminComponent {
     nTeleforno: '',
     correo: '',
     contrasena: '',
-    rol: 'Admin'
-  }
+    rol: 'Admin',
+  };
 
-  usersAdmin: User [] = []
+  usersAdmin: User[] = [];
 
-  newUserAdmin(user : User){
-    if(
+  newUserAdmin(user: User) {
+    if (
       !this.userForm.nombres ||
       !this.userForm.apellidos ||
       !this.userForm.documento ||
@@ -36,28 +35,24 @@ export class RegisterAdminComponent {
       !this.userForm.nTeleforno ||
       !this.userForm.correo ||
       !this.userForm.contrasena
-    ){
-      alert('Datos incompletos.')
-    }
-    else{
-      this.authService.newUser(user)
+    ) {
+      alert('Datos incompletos.');
+    } else {
+      this.authService.newUser(user);
       this.router.navigate(['/registar-admin']).then(() => {
         window.location.reload();
-      }); ;
-    } 
+      });
+    }
   }
 
-  loadUserAdmin(){
-    this.usersAdmin = this.authService.allUsersAdmin
+  loadUserAdmin() {
+    this.usersAdmin = this.authService.allUsersAdmin;
   }
 
-  deleteUserAdmin(user: User){
-    this.authService.deleteUserAdmin(user)
+  deleteUserAdmin(user: User) {
+    this.authService.deleteUserAdmin(user);
     this.router.navigate(['/registar-admin']).then(() => {
       window.location.reload();
-    }); ;
+    });
   }
-
-
-
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { User, UsuarioCliente } from '../interface/user.interface';
+import { User, Usuario, UsuarioAuth } from '../interface/user.interface';
 import { v4 as uuid } from 'uuid';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { enviroment } from '../../../environments/environments';
+import { LoginUser } from '../interface/login.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,6 +12,7 @@ export class AuthService {
   constructor(private router: Router, private http: HttpClient) {
     this.loadLocalStorage();
     this.loadLocalStorageAuth();
+    this.loadLocalStorageUsuario();
   }
 
   private users: User[] = [
@@ -93,18 +95,6 @@ export class AuthService {
     if (!authUser) return alert('Datos incorrectos.');
     this.userAuth = authUser;
     this.saveLocalStorageAuth();
-    this.equalRoute(authUser);
-  }
-
-  private equalRoute(user: User) {
-    if (user.rol === 'cliente')
-      this.router.navigate(['/inicio']).then(() => {
-        window.location.reload();
-      });
-    if (user.rol === 'Admin')
-      this.router.navigate(['/ventas']).then(() => {
-        window.location.reload();
-      });
   }
 
   logOut() {
@@ -139,20 +129,10 @@ export class AuthService {
 
   private apiURL: string = enviroment.apiURL;
 
-  nuevoUsuario(usuario: UsuarioCliente) {
-    const payload = {
-      correo: usuario.correo,
-      contrasena: usuario.contrasena,
-      rol: usuario.rol,
-      idPersona: {
-        nombres: usuario.nombres,
-        apellidos: usuario.apellidos,
-        documento: usuario.documento,
-        nDocumento: usuario.nDocumento,
-        telefono: usuario.nTeleforno,
-      },
-    };
-    this.http.post(`${this.apiURL}usuarios`, payload).subscribe({
+  private usuarioAuth?: UsuarioAuth;
+
+  nuevoUsuario(usuario: Usuario) {
+    this.http.post(`${this.apiURL}usuarios`, usuario).subscribe({
       next: () => {
         this.router.navigate(['/iniciarSesion']);
       },
@@ -162,5 +142,43 @@ export class AuthService {
         alert(errorMessage);
       },
     });
+  }
+
+  logearUsuario(loginUser: LoginUser) {
+    this.http
+      .post<UsuarioAuth>(`${this.apiURL}usuarios/login`, loginUser)
+      .subscribe({
+        next: (response) => {
+          this.usuarioAuth = response;
+          localStorage.setItem('usuarioAuth', JSON.stringify(this.usuarioAuth));
+          this.equalRoute(this.usuarioAuth);
+        },
+        error: (err) => {
+          const errorMessage =
+            err?.error?.message || 'Error al iniciar sesión.';
+          alert(errorMessage);
+        },
+      });
+  }
+
+  private equalRoute(user: UsuarioAuth) {
+    if (user.rol === 'cliente')
+      this.router.navigate(['/inicio']).then(() => {
+        window.location.reload();
+      });
+    if (user.rol === 'administrador')
+      this.router.navigate(['/ventas']).then(() => {
+        window.location.reload();
+      });
+  }
+
+  loadLocalStorageUsuario() {
+    if (!localStorage.getItem('usuarioAuth')) return;
+    this.usuarioAuth = JSON.parse(localStorage.getItem('usuarioAuth')!);
+    return this.usuarioAuth;
+  }
+
+  get usuarioLogueado() {
+    return this.usuarioAuth;
   }
 }
