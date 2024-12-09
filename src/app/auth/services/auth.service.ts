@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
-import { User, Usuario, UsuarioAuth } from '../interface/user.interface';
+import {
+  Persona,
+  User,
+  Usuario,
+  UsuarioAuth,
+} from '../interface/user.interface';
 import { v4 as uuid } from 'uuid';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { enviroment } from '../../../environments/environments';
 import { LoginUser } from '../interface/login.interface';
+import { BehaviorSubject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,6 +20,7 @@ export class AuthService {
     this.loadLocalStorage();
     this.loadLocalStorageAuth();
     this.loadLocalStorageUsuario();
+    this.loadLocalStoragePersona();
   }
 
   private users: User[] = [
@@ -131,6 +139,8 @@ export class AuthService {
 
   private usuarioAuth?: UsuarioAuth;
 
+  private perfilAuth?: Persona;
+
   nuevoUsuario(usuario: Usuario) {
     this.http.post(`${this.apiURL}usuarios`, usuario).subscribe({
       next: () => {
@@ -152,6 +162,7 @@ export class AuthService {
           this.usuarioAuth = response;
           localStorage.setItem('usuarioAuth', JSON.stringify(this.usuarioAuth));
           this.equalRoute(this.usuarioAuth);
+          this.perfilUsuario(this.usuarioAuth.jwt);
         },
         error: (err) => {
           const errorMessage =
@@ -181,4 +192,42 @@ export class AuthService {
   get usuarioLogueado() {
     return this.usuarioAuth;
   }
+
+  perfilUsuario(token: string) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    this.http
+      .get<Persona>(`${this.apiURL}personas/perfil`, { headers })
+      .subscribe({
+        next: (response) => {
+          this.perfilAuth = response;
+          localStorage.setItem('perfilAuth', JSON.stringify(this.perfilAuth));
+        },
+        error: (err) => {
+          alert(`Datos del perfil dañado: ${err}`);
+        },
+      });
+  }
+
+  loadLocalStoragePersona() {
+    if (!localStorage.getItem('perfilAuth')) return;
+    this.perfilAuth = JSON.parse(localStorage.getItem('perfilAuth')!);
+    return this.perfilAuth;
+  }
+
+  get perfildeUsuario() {
+    return this.perfilAuth!;
+  }
+
+  cerrarSesion() {
+    localStorage.removeItem('usuarioAuth');
+    localStorage.removeItem('perfilAuth');
+    this.router.navigate(['/inicio']).then(() => {
+      window.location.reload();
+    });
+  }
+
+  editarPersona(persona: Persona) {}
 }
