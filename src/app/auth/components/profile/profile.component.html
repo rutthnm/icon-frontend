@@ -2,54 +2,45 @@
   <div class="container">
     <h1>Perfil de Usuario</h1>
     <br>
-    <form id="formularioperfil" (ngSubmit)="editUser(userProfile)">
+    <form id="formularioperfil" (ngSubmit)="editUser(personaPerfil)">
 
       <div class="campo">
         <label for="nombres">Nombres:</label>
-        <input type="text" id="nombres" name="nombres" [(ngModel)]="userProfile.nombres" required>
+        <input type="text" id="nombres" name="nombres" [(ngModel)]="personaPerfil.nombres" required>
       </div>
       <div class="campo">
         <label for="apellidos">Apellidos:</label>
-        <input type="text" id="apellidos" name="apellidos" [(ngModel)]="userProfile.apellidos" required>
+        <input type="text" id="apellidos" name="apellidos" [(ngModel)]="personaPerfil.apellidos" required>
       </div>
 
 
       <div class="campo">
         <label for="documento">Tipo de Documento:</label>
-        <select class="form-select" id="documento" [(ngModel)]="userProfile.documento" name="documento">
+        <select class="form-select" id="documento" [(ngModel)]="personaPerfil.documento" name="documento">
           <option value=""> --Seleccionar--</option>
           <option value="DNI"> DNI </option>
           <option value="RUC"> RUC </option>
-          <option value="Carnet de Extranjería"> Carnet de Extranjería </option>
+          <option value="CARNET DE EXTRANJERÍA"> CARNET DE EXTRANJERÍA </option>
         </select>
       </div>
 
       <div class="campo">
         <label for="documento">N° Documento:</label>
-        <input type="text" id="nDocumento" name="nDocumento" [(ngModel)]="userProfile.nDocumento" required>
+        <input type="text" id="nDocumento" name="nDocumento" [(ngModel)]="personaPerfil.nDocumento" required>
       </div>
 
       <div class="campo">
         <label for="numeroTelefono">N° de Teléfono:</label>
-        <input type="text" id="numeroTelefono" name="numeroTelefono" [(ngModel)]="userProfile.nTeleforno" required>
+        <input type="text" id="numeroTelefono" name="numeroTelefono" [(ngModel)]="personaPerfil.telefono" required>
       </div>
 
-      <div class="campo">
-        <label for="correoElectronico">Correo Electrónico:</label>
-        <input type="email" id="correoElectronico" name="correoElectronico" [(ngModel)]="userProfile.correo" required>
-      </div>
-
-      <div class="campo">
-        <label for="contrasena">Contraseña:</label>
-        <input type="password" id="contrasena" name="contrasena" [(ngModel)]="userProfile.contrasena" required>
-      </div>
       <br>
       <div class="row">
         <div class="col d-flex align-items-center justify-content-center">
           <button class="btn btn-primary" type="submit">Actualizar</button>
         </div>
         <div class="col d-flex align-content-center justify-content-center">
-          <button class="btn btn-danger" (click)="logOut()">Cerrar Sesión</button>
+          <button class="btn btn-danger" (click)="cerrarSesion()">Cerrar Sesión</button>
         </div>
       </div>
 
