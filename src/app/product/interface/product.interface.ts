@@ -23,3 +23,13 @@ export interface Presentacion {
   idPresentacion?: string;
   nombre: string;
 }
+
+export interface Producto{
+  idCategoria: string;
+  nombre: string;
+  descripcion: string;
+  idMaterial: string;
+  idPresentacion: string;
+  imagen: string;
+  precio: number;
+}

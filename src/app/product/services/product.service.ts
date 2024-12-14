@@ -4,16 +4,20 @@ import {
   Material,
   Presentacion,
   Product,
+  Producto,
 } from '../interface/product.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
+import { enviroment } from '../../../environments/environments';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
+
   /*GENERAL*/
 
   private urlImg: string = 'https://api.imgbb.com/1/upload?';
@@ -44,7 +48,7 @@ export class ProductService {
     { idPresentacion: uuid(), nombre: 'Unidad' },
   ];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.loadLocalStorageP();
     this.loadLocalStorageH();
     this.loadCategoriaLocalStorage();
@@ -254,4 +258,33 @@ export class ProductService {
       this.presentacion = JSON.parse(presentaciones);
     }
   }
+
+  //CONSUMIENDO LA API
+  private apiURL: string = enviroment.apiURL;
+
+  nuevProducto(producto: Producto, imageFile: File): Observable<void>  {
+    return this.uploadImage(imageFile).pipe(
+      switchMap((imageUrl) => {
+        producto.imagen = imageUrl
+      this.http.post(`${this.apiURL}productos`, producto).subscribe({
+        next: () => {
+          this.router.navigate(['/producto-lista']);
+        },
+        error: (err) => {
+          const errorMessage =
+            err?.error?.message || 'Hubo un error al registrar el producto.';
+          alert(errorMessage);
+        },
+      });
+        return of<void>(undefined);
+      })
+    );
+  }
+
+  /*
+    TAREAS:
+    Get de presentacion, material y categoria
+    Desde la interfaz ajustar el mandar datos
+    probar y ver en la bd
+  */
 }
