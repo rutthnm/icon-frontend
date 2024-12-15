@@ -1,23 +1,28 @@
 import { Injectable } from '@angular/core';
 import {
   Categoria,
+  Cat,
   Material,
   Presentacion,
   Product,
+  nProducto,
+  Mat,
+  Pre,
   Producto,
+  infoProducto,
 } from '../interface/product.interface';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { enviroment } from '../../../environments/environments';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-
   /*GENERAL*/
 
   private urlImg: string = 'https://api.imgbb.com/1/upload?';
@@ -48,12 +53,23 @@ export class ProductService {
     { idPresentacion: uuid(), nombre: 'Unidad' },
   ];
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loadLocalStorageP();
-    this.loadLocalStorageH();
+    // this.loadLocalStorageH();
     this.loadCategoriaLocalStorage();
     this.loadMaterialLocalStorage();
     this.loadPresentacionLocalStorage();
+
+    //API
+    this.loadCatLocalStorage();
+    this.loadMatLocalStorage();
+    this.loadPreLocalStorage();
+    this.loadProLocalStorage();
+    this.loadProSelectLocalStorage();
   }
   /*GET*/
   //Productos
@@ -93,10 +109,10 @@ export class ProductService {
     localStorage.setItem('history', JSON.stringify(this._productSelected));
   }
 
-  private loadLocalStorageH() {
-    if (!localStorage.getItem('history')) return;
-    this._productSelected = JSON.parse(localStorage.getItem('history')!);
-  }
+  // private loadLocalStorageH() {
+  //   if (!localStorage.getItem('history')) return;
+  //   this._productSelected = JSON.parse(localStorage.getItem('history')!);
+  // }
 
   searchProduct(name: string) {
     if (name.length === 0) return;
@@ -262,29 +278,137 @@ export class ProductService {
   //CONSUMIENDO LA API
   private apiURL: string = enviroment.apiURL;
 
-  nuevProducto(producto: Producto, imageFile: File): Observable<void>  {
+  private cat: Cat[] = [];
+  private mat: Mat[] = [];
+  private pre: Pre[] = [];
+  private Productos: Producto[] = [];
+  private producto?: Producto;
+
+  nuevoProducto(producto: nProducto, imageFile: File): Observable<void> {
     return this.uploadImage(imageFile).pipe(
       switchMap((imageUrl) => {
-        producto.imagen = imageUrl
-      this.http.post(`${this.apiURL}productos`, producto).subscribe({
-        next: () => {
-          this.router.navigate(['/producto-lista']);
-        },
-        error: (err) => {
-          const errorMessage =
-            err?.error?.message || 'Hubo un error al registrar el producto.';
-          alert(errorMessage);
-        },
-      });
+        producto.imagen = imageUrl;
+        this.http.post(`${this.apiURL}productos`, producto).subscribe({
+          next: () => {
+            this.router.navigate(['/producto-lista']).then(() => {
+              window.location.reload();
+            });
+          },
+          error: (err) => {
+            const errorMessage =
+              err?.error?.message || 'Hubo un error al registrar el producto.';
+            alert(errorMessage);
+          },
+        });
         return of<void>(undefined);
       })
     );
   }
 
-  /*
-    TAREAS:
-    Get de presentacion, material y categoria
-    Desde la interfaz ajustar el mandar datos
-    probar y ver en la bd
-  */
+  traerCategorias() {
+    this.http.get<Cat[]>(`${this.apiURL}config-product/categoria`).subscribe({
+      next: (response) => {
+        this.cat = response;
+        localStorage.setItem('cat', JSON.stringify(this.cat));
+      },
+      error: (err) => {
+        alert(`Error al traer las categorías: ${err}`);
+      },
+    });
+  }
+
+  traerMaterial() {
+    this.http.get<Mat[]>(`${this.apiURL}config-product/material`).subscribe({
+      next: (response) => {
+        this.mat = response;
+        localStorage.setItem('mat', JSON.stringify(this.mat));
+      },
+      error: (err) => {
+        alert(`Error al traer los materiales: ${err}`);
+      },
+    });
+  }
+
+  traerPresentacion() {
+    this.http
+      .get<Pre[]>(`${this.apiURL}config-product/presentacion`)
+      .subscribe({
+        next: (response) => {
+          this.pre = response;
+          localStorage.setItem('pre', JSON.stringify(this.pre));
+        },
+        error: (err) => {
+          alert(`Error al traer las presentaciones: ${err}`);
+        },
+      });
+  }
+
+  traerProductos() {
+    this.http.get<Producto[]>(`${this.apiURL}productos`).subscribe({
+      next: (response) => {
+        this.Productos = response;
+        localStorage.setItem('pro', JSON.stringify(this.Productos));
+      },
+      error: (err) => {
+        alert(`Error al traer los productos: ${err}`);
+      },
+    });
+  }
+
+  buscarProducto(idProducto: string) {
+    this.http.get<Producto>(`${this.apiURL}productos/${idProducto}`).subscribe({
+      next: (response) => {
+      this.producto = response;
+        localStorage.setItem('proselect', JSON.stringify(this.producto));
+        this.router.navigate(['/producto']);
+      },
+      error: (err) => {
+        alert(`Error al traer los productos: ${err}`);
+      },
+    });
+  }
+
+  loadMatLocalStorage() {
+    if (!localStorage.getItem('mat')) return;
+    this.mat = JSON.parse(localStorage.getItem('mat')!);
+    return this.mat;
+  }
+
+  loadCatLocalStorage() {
+    if (!localStorage.getItem('cat')) return;
+    this.cat = JSON.parse(localStorage.getItem('cat')!);
+    return this.cat;
+  }
+
+  loadPreLocalStorage() {
+    if (!localStorage.getItem('pre')) return;
+    this.pre = JSON.parse(localStorage.getItem('pre')!);
+    return this.pre;
+  }
+
+  loadProLocalStorage() {    
+    if (!localStorage.getItem('pro')) return;
+    this.Productos = JSON.parse(localStorage.getItem('pro')!);
+    return this.Productos;
+  }
+
+  loadProSelectLocalStorage() {    
+    if (!localStorage.getItem('proselect')) return;
+    this.producto = JSON.parse(localStorage.getItem('proselect')!);
+    return this.producto;
+  }
+
+  get productoSelect(): infoProducto | undefined{
+    if (this.producto) {
+      // Asegúrate de que el precio esté como número, convirtiendo de forma segura
+      return {
+        ...this.producto,
+        precio: this.producto.precio ? parseFloat(this.producto.precio) : 0  // Verifica si 'precio' existe y conviértelo
+      };
+    }
+    // Si no hay producto, devolvemos un objeto con precio 0
+    return undefined
+  }
+
+
 }

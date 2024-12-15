@@ -19,7 +19,7 @@
           <label class="input-group-text"><b>CATEGORIA</b></label>
           <select class="form-select" name="categoria" (change)="onCategoryChange($event)">
             <option value="TODOS">TODOS</option>
-            <option *ngFor="let categoria of categorias" [value]="categoria.nombre">
+            <option *ngFor="let categoria of listcat" [value]="categoria.nombre">
               {{ categoria.nombre }}
             </option>
           </select>
@@ -62,20 +62,20 @@
 
 
       <!-- Iteración sobre los productos para mostrar cada uno -->
-      <ng-container *ngFor="let producto of productos let i = index">
+      <ng-container *ngFor="let producto of product let i = index">
 
         <tr [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="text-center">
           <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
               producto.nombre }} </label></td>
           <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
-              getCategoriaByName(producto.idCategoria!) }}</label></td>
+              producto.categoria }}</label></td>
           <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
               producto.descripcion }}</label></td>
           <td><img width="60px" height="60px" [src]="producto.imagen" alt=""></td>
           <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
-              getMaterialByName(producto.idMaterial!) }} </label></td>
+              producto.material }} </label></td>
           <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">{{
-              getPresentacionByName(producto.idPresentacion!) }} </label></td>
+              producto.presentacion }} </label></td>
           <td><label [ngStyle]="{'background-color': i % 2 === 0 ? '#ffffff' : '#d3d3d3'}" class="form-label">S/
               {{producto.precio }}</label></td>
           <td>
@@ -89,7 +89,7 @@
               </div>
               <!--[routerLink]="['/producto-agregar']" -->
               <div style="width: 50%;" class="col d-flex justify-content-center align-items-center">
-                <button (click)="editarProducto(producto)" style="border: none; color: black;"
+                <button style="border: none; color: black;"
                   class="btn btn-outline-warning">
                   <i class="bi bi-pencil"></i>
                 </button>

@@ -1,86 +1,67 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ProductService } from '../../services/product.service';
-import { Product } from '../../interface/product.interface';
+import { infoProducto } from '../../interface/product.interface';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
-import { User } from '../../../auth/interface/user.interface';
+import { UsuarioAuth } from '../../../auth/interface/user.interface';
 import { BillingService } from '../../../billing/services/billing.service';
-import { Comprobante } from '../../../billing/interfaces/voucher.interface';
 
 @Component({
   selector: 'app-info-product',
   templateUrl: './info-product.component.html',
-  styleUrl: './info-product.component.css',
+  styleUrls: ['./info-product.component.css'],
 })
 export class InfoProductComponent implements AfterViewInit {
-  @ViewChild('BaseInput')
-  baseInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('BaseInput') baseInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('AlturaInput') alturaInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('CantidadInput') cantidadInput!: ElementRef<HTMLInputElement>;
 
-  @ViewChild('AlturaInput')
-  alturaInput!: ElementRef<HTMLInputElement>;
-
-  @ViewChild('CantidadInput')
-  cantidadInput!: ElementRef<HTMLInputElement>;
-
-  DataProduct?: Product;
-
-  subTotal?: number;
   igv: number = 0.18;
-  igvOfProduct?: number;
-  total?: number;
+  subTotal: number = 0;
+  igvOfProduct: number = 0;
+  total: number = 0;
 
-  private userAuth?: User
+  producto?: infoProducto;
+  private userAuth?: UsuarioAuth;
 
-  constructor(private productService: ProductService,
-      private router: Router,
-      private authService: AuthService,
-      private billingService: BillingService
-    ) {
-    this.LoadProduct();
-    this.loadUserAuth()
-  }
-
-  loadUserAuth(){
-    this.userAuth = this.authService.userLogued
-  }
-
-  LoadProduct() {
-    this.DataProduct = this.productService.productSelected;
-    this.subTotal = this.DataProduct.precio;
-  }
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    private authService: AuthService,
+    private billingService: BillingService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit() {
+    this.loadProducto();
+    this.loadUserAuth();
     this.inputValidate();
-    this.calculateTotal();
   }
-  
 
-  inputValidate() {
-    if (this.DataProduct?.idCategoria === 'Letreros') {
-      this.baseInput.nativeElement.disabled = false;
-      this.alturaInput.nativeElement.disabled = false;
-    } else {
-      this.baseInput.nativeElement.disabled = true;
-      this.alturaInput.nativeElement.disabled = true;
+  loadUserAuth() {
+    this.userAuth = this.authService.usuarioLogueado;
+  }
+
+  loadProducto() {
+    this.producto = this.productService.productoSelect;
+    if (this.producto) {
+      this.calculateTotals();
+      // Forzar la detección de cambios después de asignar el producto
+      this.cdr.detectChanges();
     }
-
-    this.cantidadInput.nativeElement.value = '1';
   }
 
-  calculateTotal() {
+  calculateTotals() {
     const cantidad = parseFloat(this.cantidadInput.nativeElement.value);
 
-    if (!cantidad || cantidad < 0) {
+    if (!cantidad || cantidad < 1) {
       this.subTotal = 0;
       this.igvOfProduct = 0;
       this.total = 0;
-      this.cantidadInput.nativeElement.value = '1';
-      this.calculateTotal();
     } else {
-      const price = this.DataProduct?.precio;
-      this.subTotal = price! * cantidad;
-      this.igvOfProduct = this.subTotal * this.igv;
-      this.total = this.subTotal + this.igvOfProduct;
+      this.total = this.producto?.precio! * cantidad;
+      this.igvOfProduct = this.total * this.igv;
+      this.subTotal = this.total - this.igvOfProduct;
     }
 
     this.subTotal = parseFloat(this.subTotal.toFixed(2));
@@ -88,57 +69,38 @@ export class InfoProductComponent implements AfterViewInit {
     this.total = parseFloat(this.total.toFixed(2));
   }
 
-  validateBuy() {
-    
-    const cantidad = parseInt(this.cantidadInput.nativeElement.value);
+  onCantidadChange() {
+    this.calculateTotals();
+  }
 
+  validateBuy() {
+    const cantidad = parseInt(this.cantidadInput?.nativeElement?.value || '1');
     if (cantidad < 1 || !cantidad) return alert('Ingresa una cantidad.');
 
-    if(!this.userAuth){      
+    if (!this.userAuth) {
       alert('Crea una cuenta para continuar con tu compra.');
-      this.router.navigate(['/iniciarSesion'])
-    }else{
+      this.router.navigate(['/iniciarSesion']);
+    } else {
       this.router.navigate(['/pago']);
-      this.addComprobante()
     }
-
   }
 
-  addComprobante() {
-    // Obtener la fecha actual
-    const now = new Date();
-    
-    // Formatear la fecha de manera simple
-    const formattedDate = [
-      now.getFullYear(),
-      String(now.getMonth() + 1).padStart(2, '0'),
-      String(now.getDate()).padStart(2, '0')
-    ].join('-') + ' ' + [
-      String(now.getHours()).padStart(2, '0'),
-      String(now.getMinutes()).padStart(2, '0'),
-      String(now.getSeconds()).padStart(2, '0')
-    ].join(':');
-  
-    // Crear el objeto comprobante
-    const newcomprobante: Comprobante = {
-      nombrePersona: this.userAuth?.nombres,
-      apellidos: this.userAuth?.apellidos,
-      documento: this.userAuth?.documento,
-      nDocumento: this.userAuth?.nDocumento,
-      telefono: this.userAuth?.nTeleforno,
-      fecha: formattedDate,  // Fecha y hora formateadas
-      nombreProducto: this.DataProduct?.nombre,
-      categoria: this.DataProduct?.idCategoria,
-      cantidad: parseInt(this.cantidadInput.nativeElement.value, 10),
-      subTotal: this.subTotal,
-      igv: this.igvOfProduct,
-      total: this.total
-    };
-    
-    // Enviar el comprobante al servicio
-    this.billingService.dataProductBuy(newcomprobante);
+  inputValidate() {
+    if (this.producto?.categoria === 'Letreros') {
+      if (this.baseInput && this.baseInput.nativeElement) {
+        this.baseInput.nativeElement.disabled = false;
+      }
+      if (this.alturaInput && this.alturaInput.nativeElement) {
+        this.alturaInput.nativeElement.disabled = false;
+      }
+    } else {
+      if (this.baseInput && this.baseInput.nativeElement) {
+        this.baseInput.nativeElement.disabled = true;
+      }
+      if (this.alturaInput && this.alturaInput.nativeElement) {
+        this.alturaInput.nativeElement.disabled = true;
+      }
+    }
   }
   
-  
-
 }

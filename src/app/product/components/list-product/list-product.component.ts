@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
+  Cat,
   Categoria,
   Material,
   Presentacion,
   Product,
+  Producto,
 } from '../../interface/product.interface';
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
@@ -14,7 +16,9 @@ import { ProductService } from '../../services/product.service';
   styleUrl: './list-product.component.css',
 })
 export class ListProductComponent {
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(private productService: ProductService, private router: Router) {
+    this.loadInfo();
+  }
   //EVENTOS EMITIDOS PARA EL COMPONENTE PADRE
   @Output() eliminarProduct: EventEmitter<string> = new EventEmitter(); //evento para eliminar
   @Output() editarProduct: EventEmitter<Product> = new EventEmitter(); //evento para editar un producto
@@ -62,5 +66,21 @@ export class ListProductComponent {
   addProduct() {
     this.productService.resetProductSelected();
     this.router.navigate(['/producto-agregar']);
+  }
+
+  // //API
+  listcat: Cat[] = []
+  product: Producto[] = []
+
+  private loadInfo() {
+    this.productService.traerCategorias();
+    this.productService.traerProductos();
+
+    if (!this.listcat || this.listcat.length === 0) {
+      this.listcat = this.productService.loadCatLocalStorage() || [];
+    }
+    if (!this.product || this.product.length === 0) {
+      this.product = this.productService.loadProLocalStorage() || [];
+    }
   }
 }

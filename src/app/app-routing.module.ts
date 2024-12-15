@@ -14,8 +14,8 @@ import { InfoProductComponent } from './product/components/info-product/info-pro
 import { CardComponent } from './billing/components/card/card.component';
 import { AddProductComponent } from './product/components/add-product/add-product.component';
 import { RegisterAdminComponent } from './auth/components/register-admin/register-admin.component';
-import { MainListProductComponent } from './product/components/list-product/main/main-list-product.component';
 import { MainConfigProductComponent } from './product/components/config-product/main/main-config-product.component';
+import { ListProductComponent } from './product/components/list-product/list-product.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'registrarse', component: RegisterComponent },
   { path: 'perfil', component: ProfileComponent },
   { path: 'comprobante', component: VoucherComponent },
-  { path: 'producto-lista', component: MainListProductComponent },
+  { path: 'producto-lista', component: ListProductComponent },
   { path: 'producto-configuracion', component: MainConfigProductComponent },
   { path: 'producto-agregar', component: AddProductComponent },
   { path: 'registar-admin', component: RegisterAdminComponent },

@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Categoria, Product } from '../../interface/product.interface';
+import { Cat, Categoria, Product, Producto } from '../../interface/product.interface';
 import { ProductService } from '../../services/product.service';
 
 @Component({
@@ -19,6 +19,9 @@ export class CatalogueComponent {
   constructor(private productService: ProductService) {
     this.loadProduct();
     this.loadCategories();
+
+    //API
+    this.loadInfo();
   }
 
   private loadProduct() {
@@ -43,5 +46,25 @@ export class CatalogueComponent {
     } else {
       this.productsCatalogue = this.allProducts;
     }
+  }
+
+  //CONSUMIENDO LA API
+  listcat: Cat[] = []
+  productos: Producto[] = []
+
+  private loadInfo() {
+    this.productService.traerCategorias();
+    this.productService.traerProductos();
+
+    if (!this.listcat || this.listcat.length === 0) {
+      this.listcat = this.productService.loadCatLocalStorage() || [];
+    }
+    if (!this.productos || this.productos.length === 0) {
+      this.productos = this.productService.loadProLocalStorage() || [];
+    }
+  }
+
+  seleccionarProducto(idProducto: string){
+    this.productService.buscarProducto(idProducto)
   }
 }
