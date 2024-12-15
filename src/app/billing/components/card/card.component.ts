@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
-import { User } from '../../../auth/interface/user.interface';
+import { Persona } from '../../../auth/interface/user.interface';
 import { Comprobante } from '../../interfaces/voucher.interface';
 import { BillingService } from '../../services/billing.service';
 import { Router } from '@angular/router';
@@ -28,7 +28,7 @@ export class CardComponent {
     }
     this.dataComprobante();
   }
-  user?: User;
+  user?: Persona;
 
   tipoCom?: string;
   numeracion?: number;
@@ -37,7 +37,7 @@ export class CardComponent {
   comprobante?: Comprobante;
 
   loadUser() {
-    this.user = this.authService.userLogued;
+    this.user = this.authService.perfildeUsuario;
   }
 
   dataComprobante() {

@@ -193,6 +193,10 @@ export class AuthService {
     return this.usuarioAuth;
   }
 
+  get token() {
+    return this.usuarioAuth?.jwt;
+  }
+
   perfilUsuario(token: string) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,

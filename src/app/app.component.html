@@ -1,6 +1,8 @@
 <!--Topbar-->
 <shared-topbar></shared-topbar>
-<!--Main-->
-<router-outlet></router-outlet>
+<div style="display: grid; min-height: 100vh; grid-template-rows: auto 1fr auto;">
+<!--Main content-->
+    <router-outlet></router-outlet>
 <!--Footer-->
-<static-footer></static-footer>
+    <static-footer></static-footer>
+</div>

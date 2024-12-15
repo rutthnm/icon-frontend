@@ -13,7 +13,7 @@
               <label class="input-group-text" for="inputGroupSelect01"><b>CATEGORIA</b></label>
               <select #selectedCategory class="form-select" id="inputGroupSelect01" (change)="filterProduct()" >
                 <option value="Todos">-- Todos -- </option>
-                <option *ngFor="let c of Categories" value="{{c.nombre}}" > {{c.nombre}} </option>
+                <option *ngFor="let c of listcat" value="{{c.nombre}}" > {{c.nombre}} </option>
               </select>
             </div>
           </div>
@@ -31,13 +31,13 @@
 
     <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto p-5">
         
-      <div class="col" *ngFor="let p of productsCatalogue; " >
+      <div class="col" *ngFor="let p of productos; " >
   
-        <a [routerLink]="['/producto']" class="card-link" (click)="infoProduct(p.nombre)">
+        <a class="card-link" (click)="seleccionarProducto(p.idProducto)" style="cursor: pointer;">
   
           <div class="card h-100">
   
-            <img src="{{p.imagen}}" class="card-img-top" alt="...">
+            <img src="{{p.imagen}}" class="card-img-top" alt="..." style="height: 450px;">
   
             <div class="card-body">
               <h4 class="card-title"> {{p.nombre}} </h4>
