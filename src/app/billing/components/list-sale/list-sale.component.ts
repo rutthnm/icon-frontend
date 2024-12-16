@@ -12,7 +12,6 @@ export class ListSaleComponent {
 
   constructor(private billingService: BillingService) {
     this.loadVentas()
-    console.log(this.ventas)
   }
   private loadVentas() {
     this.billingService.traerVentas();

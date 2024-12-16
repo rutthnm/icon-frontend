@@ -25,8 +25,7 @@ import { AuthService } from '../../auth/services/auth.service';
 export class ProductService {
   /*GENERAL*/
 
-  private urlImg: string = 'https://api.imgbb.com/1/upload?';
-  private keyImg: string = '1b59a71f4ca356692141cca0b4f4d818';
+ 
 
   productos: Product[] = [
     {
@@ -135,20 +134,7 @@ export class ProductService {
     this.productos = JSON.parse(localStorage.getItem('productos')!);
   }
 
-  private uploadImage(image: File): Observable<string> {
-    const formData = new FormData();
-    formData.append('image', image);
-
-    return this.http
-      .post<any>(`${this.urlImg}key=${this.keyImg}`, formData)
-      .pipe(
-        map((response) => {
-          const imgUrl = response.data.url;
-          return imgUrl;
-        })
-      );
-  }
-
+  
   addProduct(producto: Product, imageFile: File): Observable<void> {
     return this.uploadImage(imageFile).pipe(
       switchMap((imageUrl) => {
@@ -277,12 +263,28 @@ export class ProductService {
 
   //CONSUMIENDO LA API
   private apiURL: string = enviroment.apiURL;
+  private urlImg: string = 'https://api.imgbb.com/1/upload?';
+  private keyImg: string = '1b59a71f4ca356692141cca0b4f4d818';
 
   private cat: Cat[] = [];
   private mat: Mat[] = [];
   private pre: Pre[] = [];
   private Productos: Producto[] = [];
   private producto?: Producto;
+
+  private uploadImage(image: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('image', image);
+
+    return this.http
+      .post<any>(`${this.urlImg}key=${this.keyImg}`, formData)
+      .pipe(
+        map((response) => {
+          const imgUrl = response.data.url;
+          return imgUrl;
+        })
+      );
+  }
 
   nuevoProducto(producto: nProducto, imageFile: File): Observable<void> {
     return this.uploadImage(imageFile).pipe(

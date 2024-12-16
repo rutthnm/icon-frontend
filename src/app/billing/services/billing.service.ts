@@ -136,7 +136,6 @@ export class BillingService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    console.log(headers)
     this.http
       .post<Compra>(`${this.apiURL}venta`, detalleCompra, { headers })
       .subscribe({
@@ -175,8 +174,7 @@ export class BillingService {
       .subscribe({
         next: (response) => {
           this.ventas = response;
-          localStorage.setItem('ventas', JSON.stringify(this.ventas));
-          this.router.navigate(['/compra'])         
+          localStorage.setItem('ventas', JSON.stringify(this.ventas));         
         },
         error: (err) => {
           alert(`No se pudo traer las ventas: ${err.message}`);
