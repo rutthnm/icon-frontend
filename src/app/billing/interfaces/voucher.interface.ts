@@ -46,3 +46,12 @@ export interface ventas {
   fecha:      string;
   monto:      string;
 }
+
+export interface compras {
+  idVenta:   string;
+  nombre:    string;
+  categoria: string;
+  cantidad:  number;
+  fecha:     string;
+  monto:     string;
+}

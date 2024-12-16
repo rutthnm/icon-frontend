@@ -5,14 +5,14 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="documentoInput">N°DOC</label>
-          <input type="text" class="form-control" id="documentoInput" [(ngModel)]="filters.documento">
+          <input type="text" class="form-control" id="documentoInput" >
         </div>
       </div>
 
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="categorySelect">CATEGORÍA</label>
-          <select class="form-select" id="categorySelect" [(ngModel)]="filters.category" >
+          <select class="form-select" id="categorySelect"  >
             <option value="">Seleccionar</option>
             <option value="Calendarios">Calendarios</option>
             <option value="Letreros">Letreros</option>
@@ -25,7 +25,7 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="typeSelect">TIPO</label>
-          <select class="form-select" id="typeSelect" [(ngModel)]="filters.type"  >
+          <select class="form-select" id="typeSelect"  >
             <option value="">Seleccionar</option>
             <option value="Boleta">Boleta</option>
             <option value="Factura">Factura</option>
@@ -36,14 +36,14 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="fromSelect">DESDE</label>
-          <input type="date" class="form-control" id="fromSelect" [(ngModel)]="filters.from"  >
+          <input type="date" class="form-control" id="fromSelect"   >
         </div>
       </div>
 
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="toSelect">HASTA</label>
-          <input type="date" class="form-control" id="toSelect" [(ngModel)]="filters.to" >
+          <input type="date" class="form-control" id="toSelect"  >
         </div>
       </div>
     </div>
@@ -77,22 +77,22 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let sale of ventas; let i = index">
+        <tr *ngFor="let venta of ventas let i = index">
           <!-- id -->
           <td>{{ i + 1 }}</td>
 
           <!-- lista de ventas  -->
-          <td style="text-align: center;">{{ sale.nDocumento }}</td>
-          <td style="text-align: center;">{{sale.nombrePersona}}</td>
-          <td style="text-align: center;">{{ sale.nombreProducto }}</td>
-          <td style="text-align: center;">{{ sale.cantidad }}</td>
-          <td style="text-align: center;">{{ sale.tipo }}</td>
-          <td style="text-align: center;">{{ sale.fecha }}</td>
-          <td style="text-align: center;">S/.{{ sale.total }}</td>
+          <td style="text-align: center;">{{ venta.nDocumento }}</td>
+          <td style="text-align: center;">{{venta.cliente}}</td>
+          <td style="text-align: center;">{{ venta.producto }}</td>
+          <td style="text-align: center;">{{ venta.cantidad }}</td>
+          <td style="text-align: center;">{{ venta.tipo }}</td>
+          <td style="text-align: center;">{{ venta.fecha }}</td>
+          <td style="text-align: center;">S/.{{ venta.monto }}</td>
           
           <!-- ojito -->
           <td>
-            <button class="btn btn-outline-warning" [routerLink]="'/comprobante'"><i class="fas fa-eye"></i></button>
+            <button class="btn btn-outline-warning" (click)="verCompra(venta.idVenta)"><i class="fas fa-eye"></i></button>
           </td>
         </tr>
       </tbody>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import jsPDF from 'jspdf'; //npm install jspdf html2canvas
 import html2canvas from 'html2canvas';
-import { Compra, Comprobante, detalleCompra, ventas } from '../interfaces/voucher.interface';
+import { Compra, compras, Comprobante, detalleCompra, ventas } from '../interfaces/voucher.interface';
 import { v4 as uuid } from 'uuid';
 import { Router } from '@angular/router';
 import { enviroment } from '../../../environments/environments';
@@ -115,6 +115,7 @@ export class BillingService {
     private compra?: Compra	
     private detalleCompra?: detalleCompra;
     private ventas?:ventas[]=[];
+    private compras?: compras[]=[];
 
   setDetalleCompra(detalle: detalleCompra) {
     this.detalleCompra = detalle;
@@ -174,7 +175,8 @@ export class BillingService {
       .subscribe({
         next: (response) => {
           this.ventas = response;
-          localStorage.setItem('ventas', JSON.stringify(this.ventas));         
+          localStorage.setItem('ventas', JSON.stringify(this.ventas));
+          this.router.navigate(['/compra'])         
         },
         error: (err) => {
           alert(`No se pudo traer las ventas: ${err.message}`);
@@ -187,11 +189,59 @@ export class BillingService {
     this.ventas = JSON.parse(localStorage.getItem('ventas')!);
     return this.ventas;
   }
-
-  get ventitas(){
-    return this.ventas!
+  
+  traerCompras() {
+    const token = this.authService.token;
+    if (!token) {
+      alert('No estás autenticado. Por favor, inicia sesión.');
+      return;
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    this.http
+      .get<compras[]>(`${this.apiURL}venta/compras`, { headers })
+      .subscribe({
+        next: (response) => {
+          this.compras = response;
+          localStorage.setItem('compras', JSON.stringify(this.compras));         
+        },
+        error: (err) => {
+          alert(`No se pudo traer las compras: ${err.message}`);
+        },
+      });
+      
+  }
+  loadComprasLocalStorage() {
+    if (!localStorage.getItem('compras')) return;
+    this.compras = JSON.parse(localStorage.getItem('compras')!);
+    return this.compras;
   }
   
+  traerUnaCompra(id:string) {
+    const token = this.authService.token;
+    if (!token) {
+      alert('No estás autenticado. Por favor, inicia sesión.');
+      return;
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    this.http
+      .get<Compra>(`${this.apiURL}venta/compra/${id}`, { headers })
+      .subscribe({
+        next: (response) => {
+          this.compra = response;
+          localStorage.setItem('compra', JSON.stringify(this.compra));
+          this.router.navigate(['/comprobante'])        
+        },
+        error: (err) => {
+          alert(`No se pudo traer las compras: ${err.message}`);
+        },
+      });
+      
+  }
+
 
   //metodo para generar el pdf de comprobante
   generarPDF(comprobanteId: string, widthInMm: number, heightInMm: number) {
