@@ -10,21 +10,21 @@
         <div class="col text-center header header-ruc">
           <div style="border: 1px solid black; width: max-content;">
             <h5>RUC: 10142536781</h5>
-            <h5> {{comprobante?.tipo}} </h5>
-            <h5> {{comprobante?.serie}} - {{comprobante?.numeracion}} </h5>
+            <h5> {{comprobante?.comprobante?.tipo}} </h5>
+            <h5> {{comprobante?.comprobante?.serie}} - 000{{comprobante?.comprobante?.numeracion}} </h5>
           </div>
         </div>
       </div>
       <hr>
       <div class="row">
         <div class="col info">
-          <h5>Señor(a): {{comprobante?.nombrePersona}} {{comprobante?.apellidos}} </h5>
-          <h5>{{comprobante?.documento}}: {{comprobante?.nDocumento}}</h5>
-          <h5>Teléfono: {{comprobante?.telefono}}</h5>
+          <h5>Señor(a): {{comprobante?.venta?.nombrePersona}} {{comprobante?.venta?.apellidos}} </h5>
+          <h5>{{comprobante?.venta?.documento}}: {{comprobante?.venta?.nDocumento}}</h5>
+          <h5>Teléfono: {{comprobante?.venta?.telefono}}</h5>
         </div>
         <div id="fecha" class="col text-right info">
           <div>
-            <h5>Fecha Emisión: {{comprobante?.fecha}} </h5>
+            <h5>Fecha Emisión: {{comprobante?.venta?.fecha}} </h5>
           </div>
         </div>
       </div>
@@ -39,9 +39,9 @@
           </thead>
           <tbody class="table-group-divider">
             <tr>
-              <td style="height: 50px;"> {{comprobante?.nombreProducto}}</td>
-              <td>{{comprobante?.categoria}}</td>
-              <td> {{comprobante?.cantidad}} </td>
+              <td style="height: 50px;"> {{comprobante?.detalleVenta?.nombreProducto}}</td>
+              <td>{{comprobante?.detalleVenta?.categoria}}</td>
+              <td> {{comprobante?.detalleVenta?.cantidad}} </td>
             </tr>
           </tbody>
         </table>
@@ -54,9 +54,9 @@
           <h6>Total a Pagar:</h6>
         </div>
         <div class="col-2 totals-1">
-          <h6>S/ {{comprobante?.subTotal}} </h6>
-          <h6>S/ {{comprobante?.igv}} </h6>
-          <h6>S/ {{comprobante?.total}} </h6>
+          <h6>S/ {{comprobante?.detalleVenta?.subTotal}} </h6>
+          <h6>S/ {{comprobante?.detalleVenta?.igv}} </h6>
+          <h6>S/ {{comprobante?.detalleVenta?.total}} </h6>
         </div>
       </div>
     </div>

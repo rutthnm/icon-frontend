@@ -29,7 +29,7 @@ export class ListBuysComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser();
     this.listComprobante();
-    this.filterCompras();
+    // this.filterCompras();
   }
 
   loadUser() {
@@ -40,11 +40,11 @@ export class ListBuysComponent implements OnInit {
     this.ventas = this.billingService.listComprobante;
   }
 
-  filterCompras() {
-    if (this.user) {
-      this.compras = this.ventas.filter(
-        (comprobante) => comprobante.nDocumento === this.user?.nDocumento
-      );
-    }
-  }
+  // filterCompras() {
+  //   if (this.user) {
+  //     this.compras = this.ventas.filter(
+  //       (comprobante) => comprobante.nDocumento === this.user?.nDocumento
+  //     );
+  //   }
+  // }
 }

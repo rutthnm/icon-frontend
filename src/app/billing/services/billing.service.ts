@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import jsPDF from 'jspdf'; //npm install jspdf html2canvas
 import html2canvas from 'html2canvas';
-import { Comprobante } from '../interfaces/voucher.interface';
+import { Compra, Comprobante, detalleCompra } from '../interfaces/voucher.interface';
 import { v4 as uuid } from 'uuid';
 import { Router } from '@angular/router';
+import { enviroment } from '../../../environments/environments';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,11 +22,14 @@ export class BillingService {
 
   private facturas: number = 0;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: HttpClient, private authService: AuthService) {
     this.loadLocalStorageC();
     this.loadLocalStorageCompro();
     this.loadLocalStorageB();
     this.loadLocalStorageF();
+
+    //API
+    this.loadCompraLocalStorage();
   }
 
   private saveLocalStorageC() {
@@ -54,13 +60,7 @@ export class BillingService {
   }
 
   addComprobante(comprobante: Comprobante) {
-    const newComprobante: Comprobante = {
-      idComprobante: uuid(),
-      ...comprobante,
-    };
-    this.comprobante.push(newComprobante);
-    this.saveLocalStorageC();
-    this.saveLocalStorageDataCompro(newComprobante);
+  
   }
 
   get listComprobante() {
@@ -107,6 +107,56 @@ export class BillingService {
       localStorage.getItem('oneDataComprobante')!
     );
   }
+
+  //CONSUMIENDO API
+  
+    private apiURL: string = enviroment.apiURL;
+
+    private compra?: Compra	
+    private detalleCompra?: detalleCompra;
+
+  setDetalleCompra(detalle: detalleCompra) {
+    this.detalleCompra = detalle;
+  }
+
+  getDetalleCompra(): detalleCompra | undefined {
+    return this.detalleCompra;
+  }
+
+  comprar(detalleCompra: detalleCompra) {
+    const token = this.authService.token;
+    if (!token) {
+      alert('No estás autenticado. Por favor, inicia sesión.');
+      return;
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    console.log(headers)
+    this.http
+      .post<Compra>(`${this.apiURL}venta`, detalleCompra, { headers })
+      .subscribe({
+        next: (response) => {
+          this.compra = response;
+          localStorage.setItem('compra', JSON.stringify(this.compra));
+          this.router.navigate(['/comprobante'])
+        },
+        error: (err) => {
+          alert(`Datos del perfil dañado: ${err.message}`);
+        },
+      });
+  }
+
+  loadCompraLocalStorage() {
+    if (!localStorage.getItem('compra')) return;
+    this.compra = JSON.parse(localStorage.getItem('compra')!);
+    return this.compra;
+  }
+
+  get compraActual(){
+    return this.compra
+  }
+  
 
   //metodo para generar el pdf de comprobante
   generarPDF(comprobanteId: string, widthInMm: number, heightInMm: number) {
