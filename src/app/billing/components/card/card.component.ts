@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Persona } from '../../../auth/interface/user.interface';
-import { Comprobante } from '../../interfaces/voucher.interface';
+import { detalleCompra } from '../../interfaces/voucher.interface';
 import { BillingService } from '../../services/billing.service';
 import { Router } from '@angular/router';
 
@@ -19,47 +19,30 @@ export class CardComponent {
     this.loadUser();
     if (this.user?.documento === 'RUC') {
       this.tipoCom = 'Factura';
-      this.serie = 'F001';
-      this.numeracion = this.billingService.nfactura;
     } else {
       this.tipoCom = 'Boleta';
-      this.serie = 'B001';
-      this.numeracion = this.billingService.nboleta;
     }
-    this.dataComprobante();
+    this.loadDetalle();
+    console.log(this.detalleCompra)
   }
   user?: Persona;
 
   tipoCom?: string;
-  numeracion?: number;
-  serie?: string;
 
-  comprobante?: Comprobante;
+  detalleCompra? : detalleCompra;
 
   loadUser() {
     this.user = this.authService.perfildeUsuario;
   }
 
-  dataComprobante() {
-    this.comprobante = this.billingService.DataComprobante;
+  loadDetalle(){
+    this.detalleCompra = this.billingService.getDetalleCompra();
   }
 
-  newComprobante() {
-    let datainitial: Comprobante = { ...this.billingService.DataComprobante };
-    datainitial = {
-      tipo: this.tipoCom,
-      numeracion: (this.numeracion! += 1),
-      serie: this.serie,
-      ...this.comprobante,
-    };
-    this.billingService.addComprobante(datainitial);
-    if (this.user?.documento === 'RUC') {
-      this.billingService.datanNumeracionFacturas(this.numeracion!);
-    } else {
-      this.billingService.datanNumeracionBoletas(this.numeracion!);
-    }
-    this.router.navigate(['/comprobante']).then(() => {
-      window.location.reload();
-    });
+  nuevaCompra() {
+    this.billingService.comprar(this.detalleCompra!);
+    // this.router.navigate(['/comprobante']).then(() => {
+    //   window.location.reload();
+    // });
   }
 }

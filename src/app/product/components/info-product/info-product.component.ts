@@ -1,10 +1,17 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { infoProducto } from '../../interface/product.interface';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UsuarioAuth } from '../../../auth/interface/user.interface';
 import { BillingService } from '../../../billing/services/billing.service';
+import { detalleCompra } from '../../../billing/interfaces/voucher.interface';
 
 @Component({
   selector: 'app-info-product',
@@ -23,6 +30,8 @@ export class InfoProductComponent implements AfterViewInit {
 
   producto?: infoProducto;
   private userAuth?: UsuarioAuth;
+
+  detalleCompra?: detalleCompra;
 
   constructor(
     private productService: ProductService,
@@ -81,12 +90,19 @@ export class InfoProductComponent implements AfterViewInit {
       alert('Crea una cuenta para continuar con tu compra.');
       this.router.navigate(['/iniciarSesion']);
     } else {
-      this.router.navigate(['/pago']);
+      if (this.producto) {
+        const detalle: detalleCompra = {
+          idProducto: this.producto.idProducto,
+          cantidad,
+        };
+        this.billingService.setDetalleCompra(detalle);
+        this.router.navigate(['/pago']);
+      }
     }
   }
 
   inputValidate() {
-    if (this.producto?.categoria === 'Letreros') {
+    if (this.producto?.categoria === 'LETREROS') {
       if (this.baseInput && this.baseInput.nativeElement) {
         this.baseInput.nativeElement.disabled = false;
       }
@@ -102,5 +118,4 @@ export class InfoProductComponent implements AfterViewInit {
       }
     }
   }
-  
 }

@@ -1,18 +1,37 @@
+export interface Compra {
+  comprobante:  Comprobante;
+  venta:        Venta;
+  detalleVenta: DetalleVenta;
+}
+
 export interface Comprobante {
-  idComprobante?: string;
-  tipo?: string; //boleta o factura
-  numeracion?: number; //001
-  serie?: string; //F
-  nombrePersona?: string; //Pedro
-  apellidos?: string; //Juarezz
-  documento?: string; //DNI
-  nDocumento?: string; //78854446149
-  telefono?: string; //9865321
-  fecha?: string; //2024-05-21
-  categoria?: string;
-  nombreProducto?: string; //Cuadro
-  cantidad?: number; //5
-  subTotal?: number; //12.00
-  igv?: number; //13
-  total?: number; //25
+  idComprobante: string;
+  serie:         string;
+  numeracion:    number;
+  tipo:          string;
+}
+
+export interface DetalleVenta {
+  categoria:      string;
+  nombreProducto: string;
+  cantidad:       number;
+  subTotal:       number;
+  igv:            number;
+  total:          number;
+}
+
+export interface Venta {
+  nombrePersona: string;
+  apellidos:     string;
+  documento:     string;
+  nDocumento:    string;
+  telefono:      string;
+  fecha:         string;
+}
+
+export interface detalleCompra {
+  idProducto: string;
+  cantidad: number;
+  alturaM?: number;
+  baseM?: number;
 }
