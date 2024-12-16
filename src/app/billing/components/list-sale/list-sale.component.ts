@@ -8,23 +8,23 @@ import { ventas } from '../../interfaces/voucher.interface';
   styleUrls: ['./list-sale.component.css'],
 })
 export class ListSaleComponent {
-  ventas: ventas[] = [];
-  filters = {
-    documento: '',
-    category: '',
-    type: '',
-    from: '',
-    to: '',
-  };
+  ventas?: ventas[] = [];
 
-  constructor(private billingService: BillingService) { this.loadVentas()
+  constructor(private billingService: BillingService) {
+    this.loadVentas()
     console.log(this.ventas)
-   }
+  }
+  private loadVentas() {
+    this.billingService.traerVentas();
 
-  loadVentas() {
-    this.ventas = this.billingService.ventitas
-     
+    if (!this.ventas || this.ventas.length === 0) {
+      this.ventas = this.billingService.loadVentasLocalStorage() || [];
     }
   }
 
- 
+  verCompra(id: string){
+    this.billingService.traerUnaCompra(id)
+  }
+}
+
+
