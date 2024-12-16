@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BillingService } from '../../services/billing.service';
-import { Comprobante } from '../../interfaces/voucher.interface';
+import { ventas } from '../../interfaces/voucher.interface';
 
 @Component({
   selector: 'app-list-sale',
   templateUrl: './list-sale.component.html',
   styleUrls: ['./list-sale.component.css'],
 })
-export class ListSaleComponent implements OnInit {
-  ventas: Comprobante[] = [];
+export class ListSaleComponent {
+  ventas: ventas[] = [];
   filters = {
     documento: '',
     category: '',
@@ -17,16 +17,14 @@ export class ListSaleComponent implements OnInit {
     to: '',
   };
 
-  constructor(private billingService: BillingService) {}
+  constructor(private billingService: BillingService) { this.loadVentas()
+    console.log(this.ventas)
+   }
 
-  ngOnInit(): void {
-    this.applyFilters();
-  }
-  fetchSales() {
-    this.ventas = this.billingService.listComprobante;
+  loadVentas() {
+    this.ventas = this.billingService.ventitas
+     
+    }
   }
 
-  applyFilters(): void {
-    this.fetchSales();
-  }
-}
+ 

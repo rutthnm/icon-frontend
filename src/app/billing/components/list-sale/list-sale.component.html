@@ -5,15 +5,14 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="documentoInput">N°DOC</label>
-          <input type="text" class="form-control" id="documentoInput" [(ngModel)]="filters.documento"
-            (change)="applyFilters()">
+          <input type="text" class="form-control" id="documentoInput" [(ngModel)]="filters.documento">
         </div>
       </div>
 
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="categorySelect">CATEGORÍA</label>
-          <select class="form-select" id="categorySelect" [(ngModel)]="filters.category" (change)="applyFilters()">
+          <select class="form-select" id="categorySelect" [(ngModel)]="filters.category" >
             <option value="">Seleccionar</option>
             <option value="Calendarios">Calendarios</option>
             <option value="Letreros">Letreros</option>
@@ -26,7 +25,7 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="typeSelect">TIPO</label>
-          <select class="form-select" id="typeSelect" [(ngModel)]="filters.type" (change)="applyFilters()">
+          <select class="form-select" id="typeSelect" [(ngModel)]="filters.type"  >
             <option value="">Seleccionar</option>
             <option value="Boleta">Boleta</option>
             <option value="Factura">Factura</option>
@@ -37,14 +36,14 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="fromSelect">DESDE</label>
-          <input type="date" class="form-control" id="fromSelect" [(ngModel)]="filters.from" (change)="applyFilters()">
+          <input type="date" class="form-control" id="fromSelect" [(ngModel)]="filters.from"  >
         </div>
       </div>
 
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="toSelect">HASTA</label>
-          <input type="date" class="form-control" id="toSelect" [(ngModel)]="filters.to" (change)="applyFilters()">
+          <input type="date" class="form-control" id="toSelect" [(ngModel)]="filters.to" >
         </div>
       </div>
     </div>
@@ -82,7 +81,7 @@
           <!-- id -->
           <td>{{ i + 1 }}</td>
 
-          <!-- lista de ventas 
+          <!-- lista de ventas  -->
           <td style="text-align: center;">{{ sale.nDocumento }}</td>
           <td style="text-align: center;">{{sale.nombrePersona}}</td>
           <td style="text-align: center;">{{ sale.nombreProducto }}</td>
@@ -90,7 +89,7 @@
           <td style="text-align: center;">{{ sale.tipo }}</td>
           <td style="text-align: center;">{{ sale.fecha }}</td>
           <td style="text-align: center;">S/.{{ sale.total }}</td>
-          -->
+          
           <!-- ojito -->
           <td>
             <button class="btn btn-outline-warning" [routerLink]="'/comprobante'"><i class="fas fa-eye"></i></button>
