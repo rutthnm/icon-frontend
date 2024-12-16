@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import jsPDF from 'jspdf'; //npm install jspdf html2canvas
 import html2canvas from 'html2canvas';
-import { Compra, Comprobante, detalleCompra } from '../interfaces/voucher.interface';
+import { Compra, Comprobante, detalleCompra, ventas } from '../interfaces/voucher.interface';
 import { v4 as uuid } from 'uuid';
 import { Router } from '@angular/router';
 import { enviroment } from '../../../environments/environments';
@@ -114,6 +114,7 @@ export class BillingService {
 
     private compra?: Compra	
     private detalleCompra?: detalleCompra;
+    private ventas?:ventas[]=[];
 
   setDetalleCompra(detalle: detalleCompra) {
     this.detalleCompra = detalle;
@@ -121,7 +122,9 @@ export class BillingService {
 
   getDetalleCompra(): detalleCompra | undefined {
     return this.detalleCompra;
-  }
+  } 
+
+
 
   comprar(detalleCompra: detalleCompra) {
     const token = this.authService.token;
@@ -155,6 +158,38 @@ export class BillingService {
 
   get compraActual(){
     return this.compra
+  }
+
+  traerVentas() {
+    const token = this.authService.token;
+    if (!token) {
+      alert('No estás autenticado. Por favor, inicia sesión.');
+      return;
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    this.http
+      .get<ventas[]>(`${this.apiURL}venta`, { headers })
+      .subscribe({
+        next: (response) => {
+          this.ventas = response;
+          localStorage.setItem('ventas', JSON.stringify(this.ventas));         
+        },
+        error: (err) => {
+          alert(`No se pudo traer las ventas: ${err.message}`);
+        },
+      });
+      
+  }
+  loadVentasLocalStorage() {
+    if (!localStorage.getItem('ventas')) return;
+    this.ventas = JSON.parse(localStorage.getItem('ventas')!);
+    return this.ventas;
+  }
+
+  get ventitas(){
+    return this.ventas!
   }
   
 
@@ -191,4 +226,5 @@ export class BillingService {
       doc.save('comprobante.pdf');
     });
   }
+  
 }

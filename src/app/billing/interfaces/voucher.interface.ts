@@ -35,3 +35,14 @@ export interface detalleCompra {
   alturaM?: number;
   baseM?: number;
 }
+
+export interface ventas {
+  idVenta:    string;
+  nDocumento: string;
+  cliente:    string;
+  producto:   string;
+  cantidad:   number;
+  tipo:       string;
+  fecha:      string;
+  monto:      string;
+}
