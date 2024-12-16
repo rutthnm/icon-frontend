@@ -23,7 +23,6 @@ export class CardComponent {
       this.tipoCom = 'Boleta';
     }
     this.loadDetalle();
-    console.log(this.detalleCompra)
   }
   user?: Persona;
 

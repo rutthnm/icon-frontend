@@ -13,7 +13,6 @@ export class ListBuysComponent {
   
   constructor(private billingService: BillingService) {
     this.loadVentas()
-    console.log(this.compras)
   }
   private loadVentas() {
     this.billingService.traerCompras();
